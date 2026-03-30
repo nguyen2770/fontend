@@ -1,0 +1,154 @@
+.site-layout-content {
+  min-height: 280px;
+}
+
+.layout-left-main {
+  box-shadow: 0px 1px 3px 0px rgba(25, 25, 25, 0.1);
+}
+
+.base-layout-header {
+  height: 45px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-inline: 10px !important;
+
+  .item-user-info {
+    .hotline-info {
+      color: red;
+      font-weight: 600;
+      padding: 0 10px;
+    }
+  }
+
+  .company-name {
+    color: white;
+    font-weight: 600;
+  }
+
+  .ant-menu {
+    line-height: 45px !important;
+  }
+}
+
+.sider-menu-main {
+  background: unset !important;
+  height: calc(100vh - 80px);
+
+  .left-menu-main {
+    height: 100% !important;
+    overflow: auto !important;
+    background: unset !important;
+    border-right: 0px !important;
+    color: #fff !important;
+  }
+
+  .ant-menu-item {
+    color: #fff !important;
+  }
+
+  .ant-menu-submenu-title {
+    color: #fff !important;
+  }
+
+  .ant-menu-item-selected {
+    background: green !important;
+    color: #fff !important;
+    font-weight: 700 !important;
+    // border-left: 3px solid #008444 !important;
+    // padding-left: calc(16px - 3px) !important;
+  }
+
+  .ant-menu-submenu-selected .ant-menu-submenu-title {
+    // color: green !important;
+    font-weight: 700 !important;
+  }
+}
+
+.base-layout-footer {
+  height: 50px;
+}
+
+.ant-layout-sider-trigger {
+  background: #008444 !important;
+}
+
+.content-container {
+  overflow: auto !important;
+}
+
+.logo-menu {
+  max-width: 180px;
+  min-width: 180px;
+  width: 180px;
+  height: 40px;
+  margin: 10px 32px;
+}
+
+.logo-menu-small {
+  max-width: 80px;
+  min-width: 80px;
+  width: 80px;
+  height: 60px;
+}
+
+.footer-container {
+  width: 100%;
+  background-color: green;
+  height: 30px;
+  display: flex;
+  position: fixed;
+  bottom: 0;
+
+  div {
+    width: 100%;
+    align-self: center;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+  }
+
+  .copy-right {
+    text-align: center;
+  }
+
+  .design-by {
+    margin-left: 20px;
+  }
+}
+
+#components-layout-demo-top .logo {
+  float: left;
+  width: 120px;
+  height: 31px;
+  margin: 16px 24px 16px 0;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.ant-row-rtl #components-layout-demo-top .logo {
+  float: right;
+  margin: 16px 0 16px 24px;
+}
+
+.ant-dropdown-link {
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.ant-layout-content {
+  min-height: auto !important;
+}
+
+.footer-company-name {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  padding: 3px 7px;
+  background-color: green;
+  color: white;
+  font-weight: 500;
+  z-index: 99999999;
+  left: 50%;
+  transform: translateX(-50%);
+}

@@ -1,0 +1,87 @@
+/* Container chính - Nền xám nhạt đặc trưng của Dashboard hiện đại */
+.asset-report-container {
+  background: #f0f2f5;
+  min-height: 100vh;
+}
+
+.report-content {
+  padding: 24px;
+}
+
+/* Tùy chỉnh Card màu trắng */
+.white-card {
+  background: #ffffff !important;
+  border: none !important;
+  border-radius: 8px !important;
+  box-shadow:
+    0 1px 2px 0 rgba(0, 0, 0, 0.03),
+    0 1px 6px -1px rgba(0, 0, 0, 0.02),
+    0 2px 4px 0 rgba(0, 0, 0, 0.02) !important;
+}
+
+.white-card .ant-card-head {
+  border-bottom: 1px solid #f0f0f0 !important;
+}
+
+.white-card .ant-card-head-title {
+  color: #000000 !important;
+  font-weight: 600 !important;
+}
+
+/* Chỉ số Statistic trong Light Mode */
+.stat-title {
+  color: #000000;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.stat-value {
+  color: #1f1f1f !important;
+  font-weight: 700 !important;
+}
+
+/* Tùy chỉnh Table (Light Mode) */
+// .custom-table .ant-table {
+//   background: #ffffff !important;
+// }
+
+// .custom-table .ant-table-thead > tr > th {
+//   background: #fafafa !important;
+//   color: #595959 !important;
+//   font-weight: 600 !important;
+//   border-bottom: 1px solid #f0f0f0 !important;
+// }
+
+// .custom-table .ant-table-tbody > tr > td {
+//   border-bottom: 1px solid #f0f0f0 !important;
+// }
+
+// /* Hover dòng trong bảng */
+// .custom-table .ant-table-row:hover > td {
+//   background-color: #f5f5f5 !important;
+// }
+
+/* Tag Status tùy chỉnh để trông nhẹ nhàng hơn */
+.ant-tag {
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+/* Thu hẹp khoảng cách giữa 2 mốc tháng và ẩn mũi tên mặc định của Antd nếu cần */
+.custom-range-picker .ant-picker-active-bar {
+  display: none; /* Ẩn thanh bar xanh phía dưới */
+}
+
+.custom-range-picker {
+  width: 160px; /* Độ rộng vừa đủ cho định dạng TXX-XX YYYY */
+  justify-content: center;
+}
+
+.custom-range-picker .ant-picker-separator {
+  display: none; /* Ẩn dấu mũi tên "→" ở giữa 2 ô chọn */
+}
+
+.custom-range-picker .ant-picker-input > input {
+  text-align: center;
+  font-weight: 500;
+}

@@ -1,0 +1,60 @@
+.summary-cards {
+  margin-bottom: 16px;
+}
+
+.summary-card {
+  height: 110px;
+  padding: 16px;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.summary-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+/* Icon */
+.summary-icon {
+  font-size: 22px;
+}
+
+/* Title */
+.summary-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #595959;
+}
+
+/* Value */
+.summary-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: #000;
+}
+
+/* Color variants */
+.summary-card.blue {
+  background: #f0f5ff;
+  color: #1d39c4;
+}
+
+.summary-card.green {
+  background: #f6ffed;
+  color: #389e0d;
+}
+
+.summary-card.red {
+  background: #fff2f0;
+  color: #cf1322;
+}
+
+.summary-card.yellow {
+  background: #fffbe6;
+  color: #d48806;
+}

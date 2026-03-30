@@ -1,0 +1,79 @@
+.assigned-user-list {
+  background: #f6f8fa;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 18px;
+  min-height: 40px;
+}
+
+.assigned-user-empty {
+  color: #888;
+  font-style: italic;
+}
+
+.assigned-user-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 4px 0;
+  border-bottom: 1px dashed #e5e7eb;
+}
+
+.assigned-user-item:last-child {
+  border-bottom: none;
+}
+
+.assigned-user-role {
+  font-weight: 600;
+  color: #1677ff;
+  min-width: 120px;
+}
+
+.assigned-user-name {
+  color: #222;
+  min-width: 140px;
+}
+
+.assigned-user-status {
+  font-size: 13px;
+  padding: 2px 10px;
+  border-radius: 12px;
+  background: #e6f4ff;
+  color: #1677ff;
+  text-transform: capitalize;
+  margin-left: auto;
+}
+
+.active-sort-item {
+  font-weight: 600;
+  background-color: #e6f7ff !important;
+  color: #1677ff !important;
+}
+
+.priority-cell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+}
+
+/* Thanh màu sát mép trái */
+.priority-bar {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  /* độ dày thanh */
+  height: 70%;
+  /* dài hơn một chút cho đẹp */
+  border-radius: 4px;
+}
+
+/* STT nằm giữa */
+.priority-number {
+  display: inline-block;
+  text-align: center;
+  width: 100%;
+}

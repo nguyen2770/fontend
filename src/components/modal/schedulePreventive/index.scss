@@ -1,0 +1,60 @@
+.config-error{
+    position: absolute;
+    top: 20%;
+    left: 15%;
+    text-align: center;
+    transform: (-50%, -50%);
+    
+    .text-title{
+        font-size: 33px;
+        font-weight:900;
+        color: #ffffff;
+        background: #1f8b04;
+        padding: 12px;
+        border-radius: 15px;
+        margin-bottom: 20px ; 
+        width: 70%;
+    }
+    
+    .text{
+        text-transform: uppercase;
+        font-size: 4rem;
+        font-weight: bold;
+        color: #0015ff;
+        text-align: start;
+    }
+
+    .text-phone{
+        font-size: 22px;
+        margin-top: 20px;
+        background: #1f8b04;
+        color: #ffffff;
+        padding: 10px;
+        width: 70%;
+        font-weight: bold;
+        border-radius: 15px;
+    }
+
+    .text-discription{
+        margin-top: 20px;
+        font-size: 18px;
+        text-align: start;
+    }
+
+    .text-end{
+        margin-top: 5px;
+        font-size: 20px;
+        font-style: italic ;
+        font-weight: bold;
+    }
+}
+
+.btn-close{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    color: #000000;
+    padding: 20px;
+    border: 0;
+}

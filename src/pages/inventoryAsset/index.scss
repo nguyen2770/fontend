@@ -1,0 +1,71 @@
+.create-inventory-asset-container {
+    .ant-checkbox-group {
+        label {
+            width: 100% !important;
+            margin-bottom: 15px !important;
+
+            .ant-checkbox-label {
+                margin-top: auto !important;
+                margin-bottom: auto !important;
+            }
+        }
+    }
+}
+
+.schedule-preventive-task-assign-user {
+    width: 50px;
+    border-radius: 5px;
+    background-color: green;
+    text-align: center;
+    color: white;
+    font-weight: 500;
+    float: right;
+}
+
+.breakdown-assign-user-count {
+    width: 50px;
+    border-radius: 5px;
+    background-color: red;
+    text-align: center;
+    color: white;
+    font-weight: 500;
+    float: right;
+}
+
+
+.calibration-work-assign-user-by-user {
+    width: 50px;
+    border-radius: 5px;
+    background-color: orange;
+    text-align: center;
+    color: white;
+    font-weight: 500;
+    float: right;
+}
+
+.inventory-asset-status-draft {
+    padding: 3px 10px;
+    border-radius: 3px;
+    background-color: #ccc;
+}
+
+.inventory-asset-status-new {
+    padding: 3px 10px;
+    border-radius: 5px;
+    background-color: #1677ff;
+    color: white;
+}
+
+.inventory-asset-status-inProgress {
+    padding: 3px 10px;
+    border-radius: 5px;
+    background-color: orangered;
+    color: white;
+}
+
+.inventory-asset-status-done {
+    padding: 3px 10px;
+    border-radius: 5px;
+    background-color: green;
+    color: white;
+}

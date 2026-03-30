@@ -1,0 +1,578 @@
+import React, { useEffect, useState } from "react";
+import {
+  Form,
+  Select,
+  Row,
+  Col,
+  Card,
+  Divider,
+  InputNumber,
+  Button,
+  Table,
+  Radio,
+  Input,
+  message,
+} from "antd";
+import { ScheduleBasedOnType } from "../../../utils/constant";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import * as _unitOfWork from "../../../api";
+import { filterOption } from "../../../helper/search-select-helper";
+import Calendar from "../../../components/modal/ScheduleModel/Calendar";
+import { LeftOutlined } from "@ant-design/icons";
+import ServiceTaskComponent from "../../../components/common/WorkTaskComponent";
+import dayjs from "dayjs";
+import ShowError from "../../../components/modal/result/errorNotification";
+import { formatCurrency, parseCurrency } from "../../../helper/price-helper";
+import AssetMaintenanceModel from "../../../components/modal/assetModel/AssetMaintenanceModel";
+import { useTranslation } from "react-i18next";
+import ConditionBasedMaintenanceSchedule from "../../../components/modal/ScheduleModel/ConditionBasedMaintenanceSchedule";
+
+export default function UpdatePreventive() {
+  const { t } = useTranslation();
+  const [form] = Form.useForm();
+  const navigate = useNavigate();
+  const params = useParams();
+  const [monitoringPointOptions, setMonitoringPointOptions] = useState([]);
+  const scheduleBasedOn = Form.useWatch("scheduleType", form);
+  const [serviceTasks, setServiceTasks] = useState([]);
+  const [preventive, setPreventive] = useState([]);
+  const [listSparePart, setListSparePart] = useState([
+    { key: 1, sparePart: "", quantity: "" },
+  ]);
+  const [sparePart, setSparePart] = useState([]);
+  const [services, setServices] = useState([]);
+  const [amcs, setAmcs] = useState([]);
+  const [isOpenAsseMaintenancetModel, setIsOpenAssetMaintenanceModel] =
+    useState(false);
+  const [assetMaintenceChange, setAssetMaintenceChange] = useState(null);
+  const [
+    conditionBasedMaintenanceSchedules,
+    setConditionBasedMaintenanceSchedules,
+  ] = useState([]);
+  const [uoms, setUoms] = useState([]);
+  const { search } = useLocation();
+  const isClone = new URLSearchParams(search).get("mode") === "clone";
+
+  useEffect(() => {
+    getAllSparePart();
+    getAllService();
+    fetchGetPreventive();
+    fetchGetAllUom();
+  }, []);
+
+  useEffect(() => {
+    form.setFieldsValue({
+      assetModel: assetMaintenceChange?.assetModel?.assetModelName,
+      asset: assetMaintenceChange?.assetModel?.asset?.assetName,
+      serial: assetMaintenceChange?.serial,
+      assetNumber: assetMaintenceChange?.assetNumber,
+      customer: assetMaintenceChange?.customer?.customerName,
+    });
+    if (assetMaintenceChange) {
+      fetchGetAllAmcByAssetMaintenance(
+        assetMaintenceChange?.id || assetMaintenceChange?._id,
+      );
+    }
+    if (assetMaintenceChange && assetMaintenceChange.assetModel) {
+      fetchGetMonitoringPointByRes();
+    }
+  }, [assetMaintenceChange]);
+
+  const fetchGetMonitoringPointByRes = async () => {
+    let res = await _unitOfWork.assetModelMonitoringPoint.getResById({
+      assetModelId:
+        assetMaintenceChange?.assetModel?.id ||
+        assetMaintenceChange?.assetModel?._id,
+    });
+    if (res && res.code === 1) {
+      setMonitoringPointOptions(res.data);
+    }
+  };
+  const fetchGetAllUom = async () => {
+    let res = await _unitOfWork.uom.getAllUom();
+    if (res && res.code === 1) {
+      setUoms(res?.data);
+    }
+  };
+  const getAllSparePart = async () => {
+    const res = await _unitOfWork.sparePart.getSpareParts();
+    if (res && res.code === 1) {
+      setSparePart(res?.data);
+    }
+  };
+  const checkServiceTasks = () => {
+    if (serviceTasks.length === 0)
+      return ShowError(
+        "topRight",
+        t("common.notifications"),
+        t(
+          "preventive.notification.please_enter_at_least_one_job_for_the_maintenance_plan",
+        ),
+      );
+    if (
+      serviceTasks.find(
+        (s) =>
+          !s.taskName ||
+          (s.taskItems.length > 0 &&
+            s.taskItems.find((ti) => !ti.taskItemDescription)),
+      )
+    ) {
+      message.error(t("preventive.messages.invalid_service_tasks"));
+      return false;
+    }
+    return true;
+  };
+  const fetchGetPreventive = async () => {
+    let res = await _unitOfWork.preventive.getPreventiveById({
+      id: params.id,
+    });
+    if (res && res.code === 1) {
+      const data = res.data?.assetMaintenance;
+      setAssetMaintenceChange(data);
+      form.setFieldsValue({
+        ...res.data,
+        assetType: data?.assetType,
+        calendarEndBy: res.data?.calendarEndBy
+          ? dayjs(res.data?.calendarEndBy)
+          : null,
+        scheduleDate: res.data?.scheduleDate
+          ? dayjs(res.data?.scheduleDate)
+          : null,
+        serial: data?.serial,
+        preventiveName: isClone ? null : res.data.preventiveName,
+      });
+      setPreventive(res.data);
+      setConditionBasedMaintenanceSchedules(
+        res?.data?.preventiveConditionBaseds || [],
+      );
+      let serivceTasks = res.data.preventiveTask;
+      serivceTasks.forEach((_serviceTask) => {
+        if (_serviceTask.taskItems && _serviceTask.taskItems.length > 0) {
+          _serviceTask.taskItems.forEach((_taskItem, _idxItem) => {
+            form.setFieldsValue({
+              ["taskItemDescription" + _idxItem]: _taskItem.taskItemDescription,
+            });
+          });
+        }
+      });
+      setServiceTasks(serivceTasks);
+      let sparePart = res.data.preventiveSparePart;
+      setListSparePart(
+        sparePart.map((item) => ({
+          key: item.id,
+          sparePart: item.sparePart,
+          quantity: item.quantity,
+        })),
+      );
+    }
+  };
+
+  const getAllService = async () => {
+    let res = await _unitOfWork.service.getAllServices();
+    if (res && res.code === 1) {
+      setServices(res.data);
+    }
+  };
+  const fetchGetAllAmcByAssetMaintenance = async (assetMaintenanceId) => {
+    let res = await _unitOfWork.amc.getAmcMappingAssetMaintenanceByRes({
+      assetMaintenance: assetMaintenanceId,
+    });
+    if (res && res.code === 1) {
+      const data = res?.data;
+      setAmcs(data.map((item) => item?.amc) || []);
+    }
+  };
+  const onChangeService = async (value) => {
+    let res = await _unitOfWork.service.getServiceById(value);
+    if (res.code === 1) {
+      let serivceTasks = res.service.serviceTasks;
+      setServiceTasks(serivceTasks);
+    }
+  };
+  const handleConditionChange = (data) => {
+    setConditionBasedMaintenanceSchedules(data);
+  };
+  const onClickSearchAssetMaintenance = () => {
+    setIsOpenAssetMaintenanceModel(true);
+    form.setFieldsValue({
+      serial: null,
+      customer: null,
+      asset: null,
+      assetModel: null,
+      category: null,
+      amc: null,
+    });
+  };
+  const checkSpareParts = () => {
+    if (listSparePart.length === 0) return true;
+    if (listSparePart.find((s) => !s.sparePart)) {
+      message.error(t("preventive.messages.invalid_spare_parts"));
+      return false;
+    }
+    if (listSparePart.find((s) => !s.quantity)) {
+      message.error(t("preventive.messages.invalid_quantity"));
+      return false;
+    }
+    return true;
+  };
+  const handleChange = (field, value, idx) => {
+    const newItems = [...listSparePart];
+    newItems[idx][field] = value;
+    setListSparePart(newItems);
+  };
+  const handleAdd = () => {
+    setListSparePart([
+      ...listSparePart,
+      { key: Date.now(), sparePart: "", quantity: "" },
+    ]);
+  };
+
+  const handleDelete = (idx) => {
+    // if (listSparePart.length < 2) return;
+    setListSparePart(listSparePart.filter((_, i) => i !== idx));
+  };
+  const handleService = async (value) => {
+    setServiceTasks([]);
+    if (!form.getFieldValue("amc")) {
+      return;
+    }
+    let res = await _unitOfWork.amc.getAmcServiceTasksByAmc({ amc: value });
+    if (res && res.code === 1) {
+      setServiceTasks(res?.amcServiceTasksWithserviceTaskItems);
+      const spareParts = res?.amcSparePartByAmcWithSpareParts;
+      if (spareParts.length > 0) {
+        const mapped = spareParts.map((sp, idx) => ({
+          key: sp?.id ?? sp._id ?? `${Date.now()}-${idx}`,
+          sparePart: sp?.id ?? sp?._id ?? "",
+          // quantity: sp?.quantity ?? sp?.amount ?? 1,
+        }));
+        setListSparePart(mapped);
+      } else {
+        setListSparePart([{ key: Date.now(), sparePart: "", quantity: "" }]);
+      }
+    }
+  };
+  const columns = [
+    {
+      title: t("preventive.list.table.index"),
+      dataIndex: "stt",
+      width: 60,
+      align: "center",
+      render: (_text, _record, idx) => idx + 1,
+    },
+    {
+      title: t("preventive.common.spare_part"),
+      dataIndex: "sparePart",
+      textAlign: "end",
+      render: (text, record, idx) => (
+        <Select
+          value={record?.sparePart}
+          onChange={(v) => handleChange("sparePart", v, idx)}
+          placeholder={t("preventive.form.spare_part_placeholder")}
+          options={(sparePart || [])
+            .filter((item) => item)
+            .map((item) => ({
+              label: item.sparePartsName,
+              value: item.id,
+            }))}
+          style={{ width: "100%" }}
+        />
+      ),
+    },
+    {
+      title: t("preventive.common.quantity"),
+      dataIndex: "quantity",
+      render: (text, record, idx) => (
+        <InputNumber
+          value={record?.quantity}
+          onChange={(value) => handleChange("quantity", value, idx)}
+          placeholder={t("preventive.form.quantity_placeholder")}
+          style={{ width: "100%" }}
+          formatter={formatCurrency}
+          parser={parseCurrency}
+        />
+      ),
+    },
+    // {
+    //     title: t("preventive.common.action"),
+    //     dataIndex: "action",
+    //     width: 100,
+    //     align: "center",
+    //     render: (_text, _record, idx) => (
+    //         <Tooltip title={t("preventive.buttons.delete")}>
+    //             <Button
+    //                 type="primary"
+    //                 danger
+    //                 icon={<DeleteOutlined />}
+    //                 onClick={() => handleDelete(idx)}
+    //             // disabled={listSparePart.length < 2}
+    //             />
+    //         </Tooltip>
+    //     ),
+    // },
+  ];
+
+  return (
+    <Form
+      labelWrap
+      layout="horizontal"
+      form={form}
+      labelCol={{
+        span: 9,
+      }}
+      wrapperCol={{
+        span: 15,
+      }}
+      style={{ padding: "15px" }}
+    >
+      <Card
+        style={{
+          marginBottom: 24,
+          borderRadius: 12,
+          boxShadow: "0 2px 8px #f0f1f2",
+        }}
+        bodyStyle={{ padding: 32 }}
+        extra={
+          <>
+            <Button onClick={() => navigate(-1)} style={{ marginRight: 8 }}>
+              <LeftOutlined />
+              {t("preventive.buttons.back")}
+            </Button>
+          </>
+        }
+      >
+        <Row gutter={32}>
+          <Col span={12}>
+            <Form.Item
+              label={t("preventive.form.preventive_name")}
+              name="preventiveName"
+              labelAlign="left"
+            >
+              <Input
+                placeholder={t("preventive.form.preventive_name_placeholder")}
+                style={{ width: "100%" }}
+              />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              label={t("assetMaintenance.asset_number")}
+              name="assetNumber"
+              labelAlign="left"
+            >
+              <Input />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              label={t("preventive.form.serial")}
+              name="serial"
+              labelAlign="left"
+            >
+              <Input placeholder={t("preventive.form.serial")}></Input>
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              label={t("preventive.form.customer")}
+              name="customer"
+              labelAlign="left"
+            >
+              <Input
+                placeholder={t("preventive.form.customer")}
+                disabled
+              ></Input>
+            </Form.Item>
+          </Col>
+          {form.getFieldValue("assetNumber") && (
+            <Col span={12}>
+              <Form.Item
+                label={t("preventive.form.contract")}
+                name="amc"
+                labelAlign="left"
+              >
+                <Select
+                  placeholder={t("preventive.form.contract_placeholder")}
+                  showSearch
+                  allowClear
+                  options={(amcs || []).map((item) => ({
+                    value: item.id,
+                    label: item.amcNo,
+                  }))}
+                  filterOption={filterOption}
+                  onChange={handleService}
+                />
+              </Form.Item>
+            </Col>
+          )}
+          <Col span={12}>
+            <Form.Item
+              label={t("preventive.form.asset")}
+              name="asset"
+              labelAlign="left"
+            >
+              <Input
+                placeholder={t("preventive.form.asset_placeholder")}
+                disabled
+              ></Input>
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              label={t("preventive.form.model")}
+              name="assetModel"
+              labelAlign="left"
+            >
+              <Input
+                placeholder={t("preventive.form.model_placeholder")}
+                disabled
+              />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              label={t("preventive.form.schedule_type")}
+              name="scheduleType"
+              labelAlign="left"
+            >
+              <Select
+                options={(ScheduleBasedOnType.Option || []).map((item) => ({
+                  key: item.value,
+                  value: item.value,
+                  label: t(item.label),
+                }))}
+                placeholder={t("preventive.form.schedule_type_placeholder")}
+                onDropdownVisibleChange={(open) => {
+                  if (open) {
+                    form.setFieldsValue({
+                      assetMaintenanceMonitoringPoint: null,
+                    });
+                  }
+                }}
+              />
+            </Form.Item>
+          </Col>
+
+          <Col span={12}>
+            <Form.Item
+              label={t("preventive.common.maintenance_time")}
+              labelAlign="left"
+            >
+              <Input.Group compact>
+                <Form.Item name="maintenanceDurationHr" noStyle>
+                  <InputNumber
+                    style={{ width: "50%" }}
+                    placeholder={t("preventive.common.hours")}
+                  />
+                </Form.Item>
+                <Form.Item name="maintenanceDurationMin" noStyle>
+                  <InputNumber
+                    style={{ width: "50%" }}
+                    placeholder={t("preventive.common.minutes")}
+                  />
+                </Form.Item>
+              </Input.Group>
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              label={t("preventive.common.priority")}
+              name="importance"
+              labelAlign="left"
+            >
+              <Radio.Group>
+                <Radio value="High">High</Radio>
+                <Radio value="Medium">Medium</Radio>
+                <Radio value="Low">Low</Radio>
+              </Radio.Group>
+            </Form.Item>
+          </Col>
+          {!form.getFieldValue("amc") && (
+            <Col span={12}>
+              <Form.Item
+                label={t("preventive.form.service")}
+                name="service"
+                labelAlign="left"
+              >
+                <Select
+                  placeholder={t("preventive.form.service_placeholder")}
+                  options={(services || []).map((item) => ({
+                    value: item.id,
+                    label: item.serviceName,
+                  }))}
+                  // onChange={(value) => onChangeService(value)}
+                />
+              </Form.Item>
+            </Col>
+          )}
+          <Divider></Divider>
+          <Row gutter={32}>
+            {scheduleBasedOn === ScheduleBasedOnType.Calendar && (
+              <Calendar form={form} preventive={preventive} />
+            )}
+            {/* {scheduleBasedOn === ScheduleBasedOnType.Monitoring && (
+              <Monitoring
+                form={form}
+                monitoringPointOptions={monitoringPointOptions}
+                preventive={preventive}
+              />
+            )}
+            {scheduleBasedOn === ScheduleBasedOnType.CalendarOrMonitoring && (
+              <CalendarOrMonitoring
+                form={form}
+                monitoringPointOptions={monitoringPointOptions}
+                preventive={preventive}
+              />
+            )} */}
+            {scheduleBasedOn === ScheduleBasedOnType.ConditionBasedSchedule && (
+              <Col span={24} style={{ width: "100vw" }}>
+                <ConditionBasedMaintenanceSchedule
+                  form={form}
+                  onChange={handleConditionChange}
+                  uoms={uoms}
+                  conditionBasedMaintenanceSchedules={
+                    conditionBasedMaintenanceSchedules
+                  }
+                  view={true}
+                />
+              </Col>
+            )}
+          </Row>
+          <Col span={24} className="mb-4" style={{ textAlign: "end" }}>
+            {/* <Button
+                            type="primary"
+                            icon={<PlusOutlined />}
+                            onClick={handleAdd}
+                            className="mb-2"
+                        >
+                            {t("preventive.buttons.add_spare_part")}
+                        </Button> */}
+            <Table
+              columns={columns}
+              dataSource={listSparePart}
+              className="custom-table wp-100"
+              pagination={false}
+            ></Table>
+          </Col>
+          <Col span={24}>
+            <AssetMaintenanceModel
+              open={isOpenAsseMaintenancetModel}
+              handleCancel={() => setIsOpenAssetMaintenanceModel(false)}
+              form={form}
+              assetChange={assetMaintenceChange}
+              onSelectAssetMaintenance={(assetMaintenance) => {
+                setAssetMaintenceChange(assetMaintenance);
+              }}
+            />
+          </Col>
+        </Row>
+
+        <ServiceTaskComponent
+          workTasks={serviceTasks}
+          setWorkTasks={setServiceTasks}
+          view={true}
+        />
+      </Card>
+    </Form>
+  );
+}

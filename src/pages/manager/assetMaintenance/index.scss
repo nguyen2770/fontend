@@ -1,0 +1,18 @@
+/* nền toàn bộ row */
+.custom-row > td {
+  background: var(--row-color) !important;
+}
+
+/* viền trái đẹp */
+.custom-row > td {
+  background: var(--row-border) !important;
+}
+
+/* hover */
+.custom-row:hover > td {
+  filter: brightness(0.98);
+  transition: 0.2s;
+}
+.table-action {
+  background: var(--row-color) !important;
+}

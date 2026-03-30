@@ -1,0 +1,87 @@
+.account-pages {
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
+
+  .bg-soft-primary {
+    background-color: rgba(85, 110, 230, 0.25) !important;
+  }
+
+  .text-primary {
+    color: #556ee6 !important;
+  }
+
+  .avatar-md {
+    height: 4.5rem;
+    width: 4.5rem;
+  }
+
+  .profile-user-wid {
+    margin-top: -50px;
+  }
+
+  .avatar-title,
+  .custom-accordion .accordion-list {
+    -moz-box-align: center;
+    align-items: center;
+    display: -moz-box;
+    display: flex;
+  }
+
+  .avatar-title {
+    background-color: #556ee6;
+    color: #fff;
+    font-weight: 500;
+    height: 100%;
+    -moz-box-pack: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .rounded-circle {
+    border-radius: 50% !important;
+  }
+
+  .bg-light {
+    background-color: #eff2f7 !important;
+  }
+}
+
+.login-card {
+  height: 520px;
+  width: 400px;
+  background-color: rgba(255, 255, 255, 0.03) !important;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  border-radius: 10px;
+  backdrop-filter: blur(15px);
+  border: 2px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 0 40px rgba(8, 7, 16, 0.6) !important;
+  padding: 50px 35px;
+}
+
+.login-card * {
+  font-family: "Poppins", sans-serif;
+
+  letter-spacing: 0.5px;
+  outline: none;
+  border: none;
+}
+
+.login-card h3 {
+  color: #ffffff;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 42px;
+  text-align: center;
+}
+
+.login-card .info {
+  color: #fff;
+}
+
+.logo-cmms {
+  width: 50%;
+}

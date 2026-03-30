@@ -1,0 +1,44 @@
+.qr-code-card-container {
+  width: 100%;
+  border: 1px solid;
+  font-size: 14px;
+  background: #ffffff;
+}
+.qr-info {
+  border-left: 1px solid;
+  width: 70%;
+}
+.qr-info div {
+  height: 25%;
+  
+}
+.asset-maintenance-customer-name {
+  border-bottom: 1px solid;
+  font-weight: 600;
+  padding: 5px;
+}
+
+.asset-maintenance-qrcode {
+  padding: 8px;
+  width: 30%;
+  text-align: center;
+  align-self: center;
+  svg {
+    width: 80% !important;
+    height: 80% !important;
+  }
+}
+
+.asset-maintenance-asset-name {
+  // max-width: 250px; /* chỉnh theo layout */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-bottom: 1px solid;
+  font-weight: 600;
+  padding: 5px;
+}
+
+.asset-maintenance-asset-number {
+  font-weight: 600;
+  padding: 5px;
+}

@@ -1,0 +1,58 @@
+.report-container {
+    .row-report-container {
+        margin: unset !important;
+    }
+
+    .ant-card {
+        color: #172B47 !important;
+        width: 100% !important;
+
+        .ant-card-head {
+            min-height: 40px !important;
+            background-color: #172B47 !important;
+            color: white !important;
+        }
+
+        p {
+            cursor: pointer;
+        }
+
+        .ant-card-body {
+            p {
+                padding: 2px !important;
+            }
+        }
+
+        .report-type-change {
+            background: green;
+            color: white;
+            border-radius: 5px;
+        }
+    }
+}
+
+.map-activate {
+    width: 45%;
+    height: 70vh;
+
+}
+
+.activate-container {
+
+    width: 100%;
+    position: relative;
+    display: flex !important;
+    justify-content: space-between !important;
+}
+
+.data-activate {
+    width: 50%;
+}
+
+.icon-item-active {
+    margin-inline: 5px;
+}
+
+.history-fuel-chart {
+    width: 100%;
+}

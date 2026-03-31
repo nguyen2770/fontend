@@ -247,41 +247,6 @@ export default function UpdateUser({
               </Form.Item>
             </Col>
             <Col span={8}>
-              <Form.Item name="branch" label={t("users.create.fields.branch")}>
-                <Select
-                  showSearch
-                  allowClear
-                  placeholder={t("users.create.placeholders.branch")}
-                  options={branchs.map((item) => ({
-                    value: item.id,
-                    label: item.name,
-                  }))}
-                  filterOption={filterOption}
-                  dropdownRender={(menu) => (
-                    <>
-                      {menu}
-                      <div style={{ padding: 8 }}>
-                        <Space>
-                          <Input
-                            maxLength={250}
-                            value={branchInput}
-                            onChange={(e) => setBranchInput(e.target.value)}
-                            placeholder={t("assetModel.model.fields.add_new")}
-                          />
-                          <Button
-                            icon={<PlusOutlined />}
-                            disabled={!branchInput.trim()}
-                            onClick={() => addBranch(branchInput)}
-                          />
-                          <div>{`${branchInput.length}/250`}</div>
-                        </Space>
-                      </div>
-                    </>
-                  )}
-                />
-              </Form.Item>
-            </Col>
-            <Col span={8}>
               <Form.Item
                 name="department"
                 label={t("users.create.fields.department")}

@@ -19,7 +19,7 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  /* color: white; */
 }
 
 .App-link {
@@ -27,7 +27,7 @@
 }
 
 .container-app {
-  background-image: url('./assets/images/backgroundMain.jpg') !important;
+  /* background-image: url('./assets/images/backgroundMain.jpg') !important; */
   background-size: cover !important;
 }
 

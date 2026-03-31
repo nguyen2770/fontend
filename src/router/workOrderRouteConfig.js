@@ -44,10 +44,10 @@ export const workOrderStaticPath = {
   preventiveMonotoring: "/maintenance/preventive-monitoring",
   preventiveConditionBasedSchedule:
     "/maintenance/preventive-condition-based-schedule",
-  propertyInspection: "/maintenance/property-inspection",
-  viewPropertyInspection: "/maintenance/property-inspection/view",
-  createPropertyInspection: "/maintenance/property-inspection/create",
-  updatePropertyInspection: "/maintenance/property-inspection/update",
+  // propertyInspection: "/maintenance/property-inspection",
+  // viewPropertyInspection: "/maintenance/property-inspection/view",
+  // createPropertyInspection: "/maintenance/property-inspection/create",
+  // updatePropertyInspection: "/maintenance/property-inspection/update",
 };
 
 export const routeWorkOrders = [
@@ -225,18 +225,18 @@ export const routeWorkOrders = [
     permisisonCode:
       permissionCodeConstant.preventive_conditioon_based_schedule_view_list,
   },
-  {
-    path: workOrderStaticPath.propertyInspection,
-    exact: true,
-    show_menu: true,
-    key: workOrderStaticPath.propertyInspection,
-    icon: <ContactsOutlined />,
-    label: "propertyInspection.title_menu",
-    component: lazy(
-      () => import("../pages/workOrder/propertyInspection/PropertyInspection"),
-    ),
-    permisisonCode: permissionCodeConstant.property_inspection_view,
-  },
+  // {
+  //   path: workOrderStaticPath.propertyInspection,
+  //   exact: true,
+  //   show_menu: true,
+  //   key: workOrderStaticPath.propertyInspection,
+  //   icon: <ContactsOutlined />,
+  //   label: "propertyInspection.title_menu",
+  //   component: lazy(
+  //     () => import("../pages/workOrder/propertyInspection/PropertyInspection"),
+  //   ),
+  //   permisisonCode: permissionCodeConstant.property_inspection_view,
+  // },
   {
     path: workOrderStaticPath.viewPropertyInspection + "/:id",
     exact: true,

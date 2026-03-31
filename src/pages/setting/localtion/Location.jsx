@@ -18,11 +18,6 @@ const Location = () => {
 
     const items = [
         {
-            key: "1",
-            label: t("menu.settings.branch"),
-            children: <Branch />
-        },
-        {
             key: "2",
             label: t("menu.settings.building"),
             children: <Building />

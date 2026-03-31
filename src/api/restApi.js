@@ -7,7 +7,7 @@ const key_message = `open_message_api`;
 // import { saveAs } from 'file-saver';
 const generateFullUrl = (_) => {
   var userStorage = localStorage.getItem(STORAGE_KEY.USER);
-  var _baseUrl = "";
+  var _baseUrl = baseURL;
   if (userStorage) {
     var userJson = JSON.parse(userStorage);
     // _baseUrl = userJson?.company?.baseUrl ?? baseURL;

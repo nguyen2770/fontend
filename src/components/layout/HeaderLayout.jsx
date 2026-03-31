@@ -383,10 +383,10 @@ export default function HeaderLayout(props) {
                 },
               ]}
             />
-            <div className="title-branch">
+            {/* <div className="title-branch">
               {t("layout.header.branch.label")}{" "}
-            </div>
-            <Select
+            </div> */}
+            {/* <Select
               onChange={onChangeBranch}
               value={valueBranch}
               style={{ width: "250px", alignSelf: "center" }}
@@ -402,18 +402,8 @@ export default function HeaderLayout(props) {
               <Select.Option value="all">
                 {t("layout.header.branch.all")}
               </Select.Option>
-            </Select>
+            </Select> */}
           </div>
-          <Dropdown overlay={menuNotification} trigger={['click']} placement="bottomRight" className="mr-4">
-            <Badge
-              count={totalUnRead}
-              overflowCount={99}
-              offset={[-2, 2]}
-              size="small"
-            >
-              <BellOutlined style={{ fontSize: "28px", cursor: 'pointer', padding: 4 }} />
-            </Badge>
-          </Dropdown>
           <Dropdown
             className="mr-3"
             overlay={
@@ -450,7 +440,17 @@ export default function HeaderLayout(props) {
               {user?.fullName}
             </span>
           </Dropdown>
-          <Button icon={<FolderOutlined />}>{niceBytes(totalSizeUsed)}</Button>
+          <Dropdown overlay={menuNotification} trigger={['click']} placement="bottomRight" className="mr-4">
+            <Badge
+              count={totalUnRead}
+              overflowCount={99}
+              offset={[-2, 2]}
+              size="small"
+            >
+              <BellOutlined style={{ fontSize: "28px", cursor: 'pointer', padding: 4 }} />
+            </Badge>
+          </Dropdown>
+          {/* <Button icon={<FolderOutlined />}>{niceBytes(totalSizeUsed)}</Button> */}
         </div>
       </div>
       <ChangePasswordModal

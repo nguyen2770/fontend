@@ -154,11 +154,6 @@ export default function ViewAssetModel() {
                   label: t("assetModel.model.tabs.documents"),
                   children: <AssetModelDocument assetModel={assetModel} />,
                 },
-                {
-                  key: "assetModelChecklist",
-                  label: t("assetMaintenanceModel.title_asset_model_checklist"),
-                  children: <AssetModelChecklist assetModel={assetModel} />,
-                },
               ]}
             />
           </Row>

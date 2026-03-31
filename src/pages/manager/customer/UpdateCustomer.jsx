@@ -167,21 +167,9 @@ const UpdateCustomer = ({ open, id, handleCancel, onRefresh }) => {
                     </Row>
 
                     <Row gutter={16}>
-                        <Col span={8}>
-                            <FormItem name="taxGroupId" label={t('customer.form.fields.customer_tax_group')}>
-                                <Select
-                                    placeholder={t('customer.form.placeholders.customer_tax_group')}
-                                    options={taxGroup}
-                                />
-                            </FormItem>
-                        </Col>
-                        <Col span={8}>
-                            <FormItem name="customer_gst_number" label={t('customer.form.fields.customer_tax_code')}>
-                                <Input
-                                    placeholder={t('customer.form.placeholders.customer_tax_code')}
-                                    maxLength={15}
-                                    showCount
-                                />
+                        <Col span={16}>
+                            <FormItem name="code" label={t('Mã nhân viên')}>
+                                <Input placeholder={t('Nhập mã nhân viên')} />
                             </FormItem>
                         </Col>
                         <Col span={8}>
@@ -214,7 +202,7 @@ const UpdateCustomer = ({ open, id, handleCancel, onRefresh }) => {
                                                 throw new Error("Upload failed");
                                             }
                                         } catch (err) {
-                                            onError(t('customer.messages.upload_error', { defaultValue:  t("common.messages.errors.failed")}));
+                                            onError(t('customer.messages.upload_error', { defaultValue: t("common.messages.errors.failed") }));
                                         }
                                     }}
                                 >

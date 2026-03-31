@@ -157,7 +157,7 @@ export const staticPath = {
   sparePartsClassification: "/cai-dat/asset/spare-parts-classification",
   location: "/cai-dat/location",
   supplierInformation: "/cai-dat/supplier/supplier-information",
-  ...inventoryAssetStaticPath
+  // ...inventoryAssetStaticPath
 };
 
 export const routes = [
@@ -352,63 +352,63 @@ export const routes = [
     un_check_permission: true,
     children: [...routeCalibrationManagements],
   },
-  {
-    path: staticPath.purchase,
-    exact: true,
-    show_menu: true,
-    key: staticPath.purchase,
-    icon: <ShoppingOutlined />,
-    label: "menu.purchase.root",
-    // un_check_permission: true,
-    permisisonCodes: [
-      permissionCodeConstant.material_request_view,
-      permissionCodeConstant.purchase_request_view,
-      permissionCodeConstant.quotation_view_list,
-      permissionCodeConstant.purchase_order_view,
-      permissionCodeConstant.equipment_hierarchy_view_list,
-    ],
-    children: [
-      ...routeSuppliesNeedOrders,
-      ...routeRequestPurchase,
-      ...routePurchaseQuotation,
-      ...routePurchaseOrders,
-    ],
-  },
-  {
-    key: "/stock",
-    exact: true,
-    show_menu: true,
-    icon: <CloudServerOutlined />,
-    label: "menu.warehouse_management.title_warehouse_management",
-    un_check_permission: true,
-    children: [...routeWarehouseManagements],
-  },
-  {
-    path: staticPath.inventory,
-    exact: true,
-    show_menu: true,
-    key: staticPath.inventory,
-    icon: <AppstoreOutlined />,
-    label: "Kho",
-    // children: [
+  // {
+  //   path: staticPath.purchase,
+  //   exact: true,
+  //   show_menu: true,
+  //   key: staticPath.purchase,
+  //   icon: <ShoppingOutlined />,
+  //   label: "menu.purchase.root",
+  //   // un_check_permission: true,
+  //   permisisonCodes: [
+  //     permissionCodeConstant.material_request_view,
+  //     permissionCodeConstant.purchase_request_view,
+  //     permissionCodeConstant.quotation_view_list,
+  //     permissionCodeConstant.purchase_order_view,
+  //     permissionCodeConstant.equipment_hierarchy_view_list,
+  //   ],
+  //   children: [
+  //     ...routeSuppliesNeedOrders,
+  //     ...routeRequestPurchase,
+  //     ...routePurchaseQuotation,
+  //     ...routePurchaseOrders,
+  //   ],
+  // },
+  // {
+  //   key: "/stock",
+  //   exact: true,
+  //   show_menu: true,
+  //   icon: <CloudServerOutlined />,
+  //   label: "menu.warehouse_management.title_warehouse_management",
+  //   un_check_permission: true,
+  //   children: [...routeWarehouseManagements],
+  // },
+  // {
+  //   path: staticPath.inventory,
+  //   exact: true,
+  //   show_menu: true,
+  //   key: staticPath.inventory,
+  //   icon: <AppstoreOutlined />,
+  //   label: "Kho",
+  //   // children: [
 
-    //   ...routeReceipts,
-    //   ...routeRequestIssue,
-    //   ...routeReceiptIssues,
-    //   ...routeReturnToSuppliers,
-    //   {
-    //     path: staticPath.inventoryManagement,
-    //     exact: true,
-    //     show_menu: true,
-    //     key: staticPath.inventoryManagement,
-    //     icon: <BuildOutlined />,
-    //     label: "Tồn kho",
-    //     component: lazy(() => import("../pages/purchase/inventory")),
-    //   },
-    //   // ...routeInternalReceipt,
-    //   // ...routePeriodClosings,
-    // ],
-  },
+  //   //   ...routeReceipts,
+  //   //   ...routeRequestIssue,
+  //   //   ...routeReceiptIssues,
+  //   //   ...routeReturnToSuppliers,
+  //   //   {
+  //   //     path: staticPath.inventoryManagement,
+  //   //     exact: true,
+  //   //     show_menu: true,
+  //   //     key: staticPath.inventoryManagement,
+  //   //     icon: <BuildOutlined />,
+  //   //     label: "Tồn kho",
+  //   //     component: lazy(() => import("../pages/purchase/inventory")),
+  //   //   },
+  //   //   // ...routeInternalReceipt,
+  //   //   // ...routePeriodClosings,
+  //   // ],
+  // },
   {
     path: staticPath.reportForm,
     exact: true,
@@ -419,7 +419,7 @@ export const routes = [
     // permisisonCode: permissionCodeConstant.re
     //không tìm thấy chỗ dùng
   },
-  ...routeinventoryAssets,
+  // ...routeinventoryAssets,
   ...routeReport,
   {
     key: staticPath.setting,
@@ -636,16 +636,6 @@ export const routes = [
             ),
             permisisonCode: permissionCodeConstant.company_setting_view_list,
           },
-          // {
-          //   path: staticPath.taxtGroup,
-          //   exact: true,
-          //   show_menu: true,
-          //   // icon: <SettingOutlined />,
-          //   key: staticPath.taxtGroup,
-          //   label: "menu.settings.tax_group",
-          //   component: lazy(() => import("../pages/manager/taxGroup")),
-          //   permisisonCode: permissionCodeConstant.tax_group_view_list,
-          // },
           {
             path: staticPath.notificationSetting,
             exact: true,
@@ -657,19 +647,6 @@ export const routes = [
               import("../pages/manager/notificationSetting/NotificationSetting")
             ),
             permisisonCode: permissionCodeConstant.company_setting_view_list, // chưa check
-          },
-          {
-            path: staticPath.configurationWorkflow,
-            exact: true,
-            show_menu: true,
-            // icon: <SettingOutlined />,
-            key: staticPath.configurationWorkflow,
-            label: "menu.settings.configuration_process",
-            component: lazy(() =>
-              import("../pages/manager/configurationWorkflow")
-            ),
-            permisisonCode:
-              permissionCodeConstant.configuration_workflow_view_list,
           },
         ],
       },

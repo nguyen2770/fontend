@@ -915,17 +915,6 @@ export default function ViewAssetMaintaenance() {
             <TabPane tab={t("assetModel.model.tabs.documents")} key="11">
               <AssetMaintenanceDocument AssetMaintenance={assetMaintaenance} />
             </TabPane>
-            {assetMaintaenance?.assetStyle !== assetStyleMap.accessories && (
-              <TabPane
-                tab={t("assetMaintenanceModel.title_asset_model_checklist")}
-                key="12"
-              >
-                <AssetMaintenanceChecklist
-                  assetMaintenance={assetMaintaenance}
-                  disabledTrue={true}
-                />
-              </TabPane>
-            )}
           </Tabs>
         </Form>
       </Card>

@@ -353,18 +353,6 @@ export default function Customer() {
         <div style={{ display: "flex", gap: 8, justifyContent: "center" }}>
           {checkPermission(
             permissions,
-            permissionCodeConstant.customer_assetmaintenance_list
-          ) && (
-              <Tooltip title={t("common_buttons.mapping_asset")}>
-                <Button
-                  icon={<ClusterOutlined />}
-                  size="small"
-                  onClick={() => onClickViewMaintenances(record.id)}
-                />
-              </Tooltip>
-            )}
-          {checkPermission(
-            permissions,
             permissionCodeConstant.customer_update
           ) && (
               <Tooltip title={t("customer.actions.edit")}>

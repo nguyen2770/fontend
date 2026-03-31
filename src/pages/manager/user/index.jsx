@@ -203,7 +203,7 @@ export default function UserGroup() {
       setIsModalOpen(true);
     }
     fetchGetListUser(1);
-    fetchAllBranchs();
+    // fetchAllBranchs();
     fetchRoles();
     fetchDepartments();
     setOpenBulkUpload(false);
@@ -271,35 +271,6 @@ export default function UserGroup() {
                 size="small"
                 onClick={() => onClickUpdate(record)}
               />
-            </Tooltip>
-          )}
-          {checkPermission(
-            permissions,
-            permissionCodeConstant.mapping_user_branch,
-          ) && (
-            <Tooltip title={t("users.list.tooltips.mapping_branch")}>
-              <Button
-                className="bt-green"
-                danger
-                icon={<ClusterOutlined />}
-                size="small"
-                onClick={() => {
-                  onClickMappingBranch(record);
-                }}
-              />
-            </Tooltip>
-          )}
-          {checkPermission(
-            permissions,
-            permissionCodeConstant.mapping_user_asset,
-          ) && (
-            <Tooltip
-              title={t("users.list.tooltips.mapping_asset")}
-              onClick={() => {
-                navigate(staticPath.UserMappingAsset + "/" + record.id);
-              }}
-            >
-              <ClusterOutlined className="icon-table" />
             </Tooltip>
           )}
           {checkPermission(

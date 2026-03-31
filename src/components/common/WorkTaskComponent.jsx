@@ -22,7 +22,7 @@ import { useTranslation } from "react-i18next";
 const itemTasksBase = [
   { key: "inspection", labelKey: "workTask.taskTypes.inspection" },
   { key: "monitoring", labelKey: "workTask.taskTypes.monitoring" },
-  { key: "calibration", labelKey: "workTask.taskTypes.calibration" },
+  // { key: "calibration", labelKey: "workTask.taskTypes.calibration" },
 ];
 
 export default function ServiceTaskComponent({ workTasks, setWorkTasks, view }) {

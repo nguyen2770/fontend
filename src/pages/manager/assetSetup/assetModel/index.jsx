@@ -203,17 +203,6 @@ export default function AssetModelList() {
       align: "center",
       render: (_, record) => (
         <div>
-          <Tooltip
-            title={t("assetModel.common.buttons.btn_preventiveOfModel")} // chưa check
-          >
-            <Button
-              type="primary"
-              icon={<ClockCircleOutlined />}
-              size="small"
-              onClick={() => onViewPreventiveOfModel(record)}
-              className="mr-2"
-            />
-          </Tooltip>
           {checkPermission(
             permissions,
             permissionCodeConstant.equipment_model_update,

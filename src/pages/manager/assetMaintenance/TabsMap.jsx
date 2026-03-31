@@ -18,7 +18,7 @@ export default function TabsMap({ form }) {
     fetchAllFloor();
     fetchAllDepartment();
     fetchAllBuilding();
-    fetchAllBranch();
+    // fetchAllBranch();
   }, []);
 
   useEffect(() => {
@@ -121,7 +121,7 @@ export default function TabsMap({ form }) {
           </Form.Item>
         </Col>
 
-        <Col span={12}>
+        {/* <Col span={12}>
           <Form.Item
             name="branch"
             label={t("assetMaintenance.form.fields.branch")}
@@ -137,7 +137,7 @@ export default function TabsMap({ form }) {
               filterOption={filterOption}
             />
           </Form.Item>
-        </Col>
+        </Col> */}
         <Col span={12}>
           <Form.Item
             name="building"

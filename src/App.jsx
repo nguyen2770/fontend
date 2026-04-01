@@ -19,14 +19,14 @@ function App() {
   } = useAuth();
   useEffect(() => {
     if (window.innerWidth <= 768) {
-      window.location.replace(`https://m.medicmms.vn`);
+      window.location.replace(`mobie`);
     }
   }, []);
   useEffect(() => {
     if (isAuthenticated) {
       fetchApp();
       fetchUserPermission();
-      _unitOfWork.user.updateLastLoginTime();
+      // _unitOfWork.user.updateLastLoginTime();
     } else {
       setLoadingFirst(false);
     }

@@ -35,7 +35,7 @@ export default function QrCodeCardSparePart({ sparePartDetail, companyCode }) {
           <div className="asset-maintenance-qrcode">
             <QRCode
               value={
-                "https://m.medicmms.vn/create-breakdown?sparePartDetail=" +
+                "https://cmms.vn/create-breakdown?sparePartDetail=" +
                 sparePartDetail.id +
                 "&companyCode=" +
                 user?.company?.code

@@ -136,7 +136,7 @@ export default function SearchAssetMaintenanceQrCode() {
     var content = "<html>";
     content += `<head>
 		<link rel="stylesheet" href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css'/>
-		<link rel="stylesheet" href='https://medicmms.vn/qrcode.css'/>
+		<link rel="stylesheet" href='https://cmms.vn/qrcode.css'/>
     <style>
 			@page { font-size: 23px;  margin: 20px; }
 			.col-form-label { padding-bottom: 0 !important; padding-top: 0 !important; font-weight: 700 !important; }

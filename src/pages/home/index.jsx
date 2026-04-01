@@ -35,7 +35,7 @@ export default function Home() {
   const [quickApprovalTotal, setQuickApprovalTotal] = useState(0);
   useEffect(() => {
     setHeaderTitle(t("dashboard.tabs.home"));
-    fetchQuickApprovalTotal();
+    // fetchQuickApprovalTotal();
   }, []);
 
   const fetchQuickApprovalTotal = async () => {
@@ -58,12 +58,12 @@ export default function Home() {
       children: <Dashbroad />,
       icon: <AppstoreAddOutlined />,
     },
-    {
-      key: "2",
-      label: t("dashboard.tabs.comparison"),
-      children: <ComparisonDashbroard />,
-      icon: <PieChartOutlined />,
-    },
+    // {
+    //   key: "2",
+    //   label: t("dashboard.tabs.comparison"),
+    //   children: <ComparisonDashbroard />,
+    //   icon: <PieChartOutlined />,
+    // },
     {
       key: "3",
       label: t("dashboard.tabs.kpi"),
@@ -83,34 +83,10 @@ export default function Home() {
     //   icon: <ScheduleOutlined />,
     // },
     {
-      key: "6",
-      label:
-        quickApprovalTotal && quickApprovalTotal > 0 ? (
-          <Badge
-            className="approve-icon-dashbroad"
-            count={quickApprovalTotal}
-            size="small"
-            offset={[6, 0]}
-          >
-            <span>{t("dashboard.tabs.quick_approval")}</span>
-          </Badge>
-        ) : (
-          <span>{t("dashboard.tabs.quick_approval")}</span>
-        ),
-      children: <QuickApproval onTotalChange={setQuickApprovalTotal} />,
-      icon: <HomeOutlined />,
-    },
-    {
       key: "7",
       label: t("dashboard.tabs.my_calendar"),
       children: <MyCalenders />,
       icon: <ScheduleOutlined />,
-    },
-    {
-      key: "8",
-      label: t("Tổng hợp công việc"),
-      children: <JobSummaryTab />,
-      icon: <BlockOutlined />,
     },
   ];
   return (

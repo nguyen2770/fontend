@@ -4,7 +4,7 @@ export const getListUser = (payload) => {
   return get("users/get-list", { ...payload });
 };
 export const createUser = async (payload) => {
-  let res = await restGateway.post("users/create", { ...payload });
+  let res = await post("users/create", { ...payload });
   if (res && res.id) {
     return post("users/create", { ...res.user });
   }
@@ -15,19 +15,19 @@ export const getUserById = (payload) => {
   return get(`users/get-by-id/${userId}`, { ...params });
 };
 export const updateUser = async (userId, payload) => {
-  let res = await restGateway.patch(`users/update/${userId}`, payload);
+  let res = await patch(`users/update/${userId}`, payload);
   if (res && res.id) {
     return patch(`users/update/${userId}`, payload);
   }
   return;
 };
 export const updateUserStatus = (payload) => {
-  restGateway.patch("users/update-status", { ...payload });
+  patch("users/update-status", { ...payload });
   return patch("users/update-status", { ...payload });
 };
 export const deleteUser = (payload) => {
   const { userId, ...rest } = payload;
-  restGateway.deleteRequest(`users/delete/${userId}`, { ...rest });
+  deleteRequest(`users/delete/${userId}`, { ...rest });
   return deleteRequest(`users/delete/${userId}`, { ...rest });
 };
 export const getAllUser = (payload) => {
@@ -52,7 +52,7 @@ export const getPermissisonByUsers = () => {
   return get(`users/get-permission-by-user`, {});
 };
 export const updateLastLoginTime = () => {
-  return restGateway.patch(`users/update-last-login-time`, {});
+  return patch(`users/update-last-login-time`, {});
 };
 export const uploadUserExcel = (_body) => {
   return postData('users/upload-user', _body);

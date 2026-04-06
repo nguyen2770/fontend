@@ -51,40 +51,32 @@ export default function ApproveReceiptPurchase() {
     useEffect(() => {
         fetchReceiptPurchaseById(id);
         fetchDepartments();
-        fetchBranches();
-        fetchSuppliers();
         fetchDataTable();
         fetchStockLocation();
-
+        fetchSuppliers();
     }, []);
 
     const fetchReceiptPurchaseById = async (id) => {
         const res = await _unitOfWork.receiptPurchase.getReceiptPurchaseById({ id: id })
-        if (res) {
+        if (res.stockReceipt) {
             const converted = {
-                ...res,
-                warehouseReceivedDate: res.warehouseReceivedDate ? dayjs(res.warehouseReceivedDate) : null,
-                productionDate: res.productionDate ? dayjs(res.productionDate).format(FORMAT_DATE) : null,
-                createdName: res.createdBy?.fullName,
-                purchaseOrder: res.purchaseOrder?.id,
+                ...res?.stockReceipt,
+                warehouseReceivedDate: res?.stockReceipt?.warehouseReceivedDate ? dayjs(res?.stockReceipt?.warehouseReceivedDate) : null,
+                productionDate: res?.stockReceipt?.productionDate ? dayjs(res?.stockReceipt?.productionDate).format(FORMAT_DATE) : null,
+                createdName: res?.stockReceipt?.createdBy?.fullName,
             };
-            form.setFieldsValue(converted); setAction(res.state);
-            setPurchaseOrder(prev => ([
-                ...prev,
-                {
-                    label: res.purchaseOrder?.code,
-                    value: res.purchaseOrder?.id,
-                }
-            ]));
+            form.setFieldsValue(converted);
+            setAction(res?.stockReceipt?.state);
         }
     }
-
+    
     const fetchSuppliers = async () => {
         const supplier = await _unitOfWork.supplier.getAllSupplier();
         if (supplier?.data) {
             setSuppliers(supplier.data);
         }
     }
+
     const fetchStockLocation = async () => {
         const payload = {
             page: 1,
@@ -110,53 +102,6 @@ export default function ApproveReceiptPurchase() {
         }
     }
 
-    const fetchBranches = async () => {
-        const branch = await _unitOfWork.branch.getAllBranch();
-        if (branch?.data) {
-            const option = branch.data.map(item => ({
-                label: item.name,
-                value: item.id,
-            }))
-            setBranches(option)
-        }
-    }
-
-    const handleChangePurchaseOrder = async (id) => {
-        const res = await _unitOfWork.purchaseOrder.getPurchaseOrderDetailById({ id })
-        if (res.data) {
-            const dataTable = await Promise.all(
-                res.data.map(async (item) => {
-                    if (item.itemType == "SpareParts") {
-                        return {
-                            ...item,
-                            code: item.item?.code,
-                            name: item.item?.sparePartsName,
-                            item: item.item.id || item.item,
-                            uomName: item.item.uomId?.uomName,
-                            purchaseOrderDetail: item.id || item._id,
-                            vatAmount: (parseFloat(item.vatPercent || 0) / 100) * parseFloat(item.qty || 0) * parseFloat(item.unitPrice || 0),
-                            totalAmount:
-                                (parseFloat(item.vatPercent || 0) / 100) * parseFloat(item.qty || 0) * parseFloat(item.unitPrice || 0) +
-                                parseFloat(item.qty || 0) * parseFloat(item.unitPrice || 0),
-                        };
-                    } else {
-                        return {
-                            ...item,
-                            code: item.item?.assetModelName,
-                            name: item.item.asset?.assetName,
-                            item: item.item.id || item.item,
-                            purchaseOrderDetail: item.id || item._id,
-                            vatAmount: (parseFloat(item.vatPercent || 0) / 100) * parseFloat(item.qty || 0) * parseFloat(item.unitPrice || 0),
-                            totalAmount:
-                                (parseFloat(item.vatPercent || 0) / 100) * parseFloat(item.qty || 0) * parseFloat(item.unitPrice || 0) +
-                                parseFloat(item.qty || 0) * parseFloat(item.unitPrice || 0),
-                        };
-                    }
-                })
-            );
-            setData(dataTable);
-        }
-    }
 
     const fetchDataTable = async () => {
         const res = await _unitOfWork.receiptPurchase.getReceiptPurchaseDetailById({ id: id });
@@ -381,7 +326,7 @@ export default function ApproveReceiptPurchase() {
     return (
         <div>
             <Form
-labelWrap
+                labelWrap
                 form={form}
                 labelCol={{ span: 8 }}
                 wrapperCol={{ span: 16 }}
@@ -443,15 +388,6 @@ labelWrap
                                 ]}
                             >
                                 <Select options={locationDest}></Select>
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item
-                                labelAlign="left"
-                                label={t("receiptPurchase.form.branch")}
-                                name="branch"
-                            >
-                                <Select options={branches}></Select>
                             </Form.Item>
                         </Col>
                         <Col span={12}>
@@ -527,18 +463,6 @@ labelWrap
                                 name="description"
                             >
                                 <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item
-                                labelAlign="left"
-                                label={t("receiptPurchase.form.purchaseOrder")}
-                                name="purchaseOrder"
-                            >
-                                <Select
-                                    options={purchaseOrder}
-                                    onChange={(value) => handleChangePurchaseOrder(value)}
-                                />
                             </Form.Item>
                         </Col>
                     </Row>

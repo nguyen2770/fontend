@@ -50,8 +50,6 @@ export default function CreateStockReceipt() {
             createBy: user.id
         });
         fetchDepartments();
-        fetchBranches();
-        fetchPurchaseOrder();
         fetchSuppliers();
         fetchStockLocation();
     }, []);
@@ -89,27 +87,7 @@ export default function CreateStockReceipt() {
         }
     }
 
-    const fetchBranches = async () => {
-        const branch = await _unitOfWork.branch.getAllBranch();
-        if (branch?.data) {
-            const option = branch.data.map(item => ({
-                label: item.name,
-                value: item.id,
-            }))
-            setBranches(option)
-        }
-    }
 
-    const fetchPurchaseOrder = async () => {
-        const res = await _unitOfWork.purchaseOrder.getAllOrderPurchase()
-        if (res) {
-            const option = res.data.map(item => ({
-                label: item.code,
-                value: item.id,
-            }))
-            setPurchaseOrder(option)
-        }
-    }
 
     const handleChangePurchaseOrder = async (id) => {
         const res = await _unitOfWork.purchaseOrder.getPurchaseOrderDetailById({ id })
@@ -313,17 +291,6 @@ export default function CreateStockReceipt() {
         },
     ];
 
-    const addBranch = async (name) => {
-        if (!name || !name.trim()) return;
-        const response = await _unitOfWork.branch.createBranch({
-            name: name,
-        });
-        notiAction(t, response);
-        if (response) {
-            fetchBranches();
-        }
-    };
-
     const addDepartment = async (name) => {
         if (!name || !name.trim()) return;
         const response = await _unitOfWork.department.createDepartment({
@@ -349,7 +316,7 @@ export default function CreateStockReceipt() {
     return (
         <div>
             <Form
-labelWrap
+                labelWrap
                 form={form}
                 labelCol={{ span: 8 }}
                 wrapperCol={{ span: 16 }}
@@ -393,21 +360,6 @@ labelWrap
                                 ]}
                             >
                                 <Select options={locationDest}></Select>
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item
-                                labelAlign="left"
-                                label={t("receiptPurchase.form.branch")}
-                                name="branch"
-                            >
-                                <CustomSelectAdd
-                                    placeholder={t(
-                                        "users.create.placeholders.branch"
-                                    )}
-                                    options={branches}
-                                    onAdd={addBranch}
-                                />
                             </Form.Item>
                         </Col>
                         <Col span={12}>
@@ -489,18 +441,6 @@ labelWrap
                                 name="description"
                             >
                                 <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item
-                                labelAlign="left"
-                                label={t("receiptPurchase.form.purchaseOrder")}
-                                name="purchaseOrder"
-                            >
-                                <Select
-                                    options={purchaseOrder}
-                                    onChange={(value) => handleChangePurchaseOrder(value)}
-                                />
                             </Form.Item>
                         </Col>
                     </Row>

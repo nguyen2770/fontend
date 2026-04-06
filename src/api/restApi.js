@@ -60,6 +60,7 @@ const parseParams = (url, params) => {
 function get(url, params) {
   const headers = {
     authorization: getToken(),
+    'ngrok-skip-browser-warning': 'true',
     ...headerDefault,
   };
   message.loading({

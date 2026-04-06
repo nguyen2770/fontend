@@ -214,10 +214,6 @@ export default function AssetMaintenanceModel({
       render: (text, record) => (
         <div>
           <LabelValue
-            label={t("breakdown.map.fields.branch")}
-            value={record?.branchName}
-          />
-          <LabelValue
             label={t("breakdown.map.fields.department")}
             value={record?.departmentName}
           />

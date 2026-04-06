@@ -490,10 +490,7 @@ export default function AssetMaintenance() {
       title: t("preventiveSchedule.modal.map_title"),
       render: (text, record) => (
         <div>
-          <LabelValue
-            label={t("breakdown.map.fields.branch")}
-            value={record?.branchName}
-          />
+       
           <LabelValue
             label={t("breakdown.map.fields.department")}
             value={record?.departmentName}

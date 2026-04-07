@@ -37,7 +37,6 @@ export default function ApproveReceiptPurchase() {
     const [isOpenModalDetail, setIsOpenModalDetail] = useState(false)
     const [data, setData] = useState([])
     const [departments, setDepartments] = useState([]);
-    const [branches, setBranches] = useState([])
     const [editingDetail, setEditingDetail] = useState(null);
     const [editingIndex, setEditingIndex] = useState(null);
     const [purchaseOrder, setPurchaseOrder] = useState([]);

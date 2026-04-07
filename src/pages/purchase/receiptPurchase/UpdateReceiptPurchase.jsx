@@ -49,7 +49,6 @@ export default function UpdateReceiptPurchase() {
     useEffect(() => {
         fetchReceiptPurchaseById(id);
         fetchDepartments();
-        fetchBranches();
         fetchSuppliers();
         fetchDataTable();
         fetchStockLocation();
@@ -58,21 +57,14 @@ export default function UpdateReceiptPurchase() {
 
     const fetchReceiptPurchaseById = async (id) => {
         const res = await _unitOfWork.receiptPurchase.getReceiptPurchaseById({ id: id })
-        if (res) {
+        if (res.stockReceipt) {
             const converted = {
-                ...res,
-                warehouseReceivedDate: res.warehouseReceivedDate ? dayjs(res.warehouseReceivedDate) : null,
-                createdName: res.createdBy?.fullName,
-                purchaseOrder: res.purchaseOrder?.id,
+                ...res.stockReceipt,
+                warehouseReceivedDate: res.stockReceipt?.warehouseReceivedDate ? dayjs(res.stockReceipt?.warehouseReceivedDate) : null,
+                createdName: res.stockReceipt?.createdBy?.fullName,
             };
             form.setFieldsValue(converted);
-            setPurchaseOrder(prev => ([
-                ...prev,
-                {
-                    label: res.purchaseOrder?.code,
-                    value: res.purchaseOrder?.id,
-                }
-            ]));
+
         }
     }
 
@@ -134,7 +126,7 @@ export default function UpdateReceiptPurchase() {
                             uomName: item.item.uomId?.uomName,
                             currentQty: item.currentQty || null,
                             qty: item.currentQty ?? item.qty,
-                            purchaseOrderDetail: item.id, 
+                            purchaseOrderDetail: item.id,
                             vatAmount: (parseFloat(item.vatPercent || 0) / 100) * parseFloat(item.qty || 0) * parseFloat(item.unitPrice || 0),
                             totalAmount:
                                 (parseFloat(item.vatPercent || 0) / 100) * parseFloat(item.qty || 0) * parseFloat(item.unitPrice || 0) +
@@ -148,7 +140,7 @@ export default function UpdateReceiptPurchase() {
                             item: item.item.id || item.item,
                             qty: item.currentQty ?? item.qty,
                             currentQty: item.currentQty || null,
-                            purchaseOrderDetail: item.id,               
+                            purchaseOrderDetail: item.id,
                             vatAmount: (parseFloat(item.vatPercent || 0) / 100) * parseFloat(item.qty || 0) * parseFloat(item.unitPrice || 0),
                             totalAmount:
                                 (parseFloat(item.vatPercent || 0) / 100) * parseFloat(item.qty || 0) * parseFloat(item.unitPrice || 0) +
@@ -366,16 +358,6 @@ export default function UpdateReceiptPurchase() {
         },
     ];
 
-    const addBranch = async (name) => {
-        if (!name || !name.trim()) return;
-        const response = await _unitOfWork.branch.createBranch({
-            name: name,
-        });
-        notiAction(t, response);
-        if (response) {
-            fetchBranches();
-        }
-    };
 
     const addDepartment = async (name) => {
         if (!name || !name.trim()) return;
@@ -402,7 +384,7 @@ export default function UpdateReceiptPurchase() {
     return (
         <div>
             <Form
-labelWrap
+                labelWrap
                 form={form}
                 labelCol={{ span: 8 }}
                 wrapperCol={{ span: 16 }}
@@ -446,21 +428,6 @@ labelWrap
                                 ]}
                             >
                                 <Select options={locationDest}></Select>
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item
-                                labelAlign="left"
-                                label={t("receiptPurchase.form.branch")}
-                                name="branch"
-                            >
-                                <CustomSelectAdd
-                                    placeholder={t(
-                                        "users.create.placeholders.branch"
-                                    )}
-                                    options={branches}
-                                    onAdd={addBranch}
-                                />
                             </Form.Item>
                         </Col>
                         <Col span={12}>
@@ -542,18 +509,6 @@ labelWrap
                                 name="description"
                             >
                                 <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item
-                                labelAlign="left"
-                                label={t("receiptPurchase.form.purchaseOrder")}
-                                name="purchaseOrder"
-                            >
-                                <Select
-                                    options={purchaseOrder}
-                                    onChange={(value) => handleChangePurchaseOrder(value)}
-                                />
                             </Form.Item>
                         </Col>
                     </Row>

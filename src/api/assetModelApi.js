@@ -27,3 +27,6 @@ export const updateAssetModelStatus = (id) => {
 export const deleteAssetModel = (payload) => {
     return deleteRequest('assetModel/delete', { ...payload });
 }
+export const getListAssetModelStock = (payload) => {
+    return get('assetModel/get-list-inventory', { ...payload });
+}

@@ -28,16 +28,16 @@ export const warehouseManagementStaticPath = {
 };
 
 export const routeWarehouseManagements = [
-  {
-    path: warehouseManagementStaticPath.stockLocation,
-    exact: true,
-    show_menu: true,
-    icon: <CloudServerOutlined />,
-    key: warehouseManagementStaticPath.stockLocation,
-    label: "Danh sách kho",
-    component: lazy(() => import("../pages/purchase/stockLocation")),
-    un_check_permission: true, // chưa check
-  },
+  // {
+  //   path: warehouseManagementStaticPath.stockLocation,
+  //   exact: true,
+  //   show_menu: true,
+  //   icon: <CloudServerOutlined />,
+  //   key: warehouseManagementStaticPath.stockLocation,
+  //   label: "Danh sách kho",
+  //   component: lazy(() => import("../pages/purchase/stockLocation")),
+  //   un_check_permission: true, // chưa check
+  // },
   {
     path: warehouseManagementStaticPath.warehouseAwaitingLiquidation,
     exact: true,

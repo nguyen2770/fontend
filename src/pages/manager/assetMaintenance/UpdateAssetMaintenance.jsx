@@ -450,16 +450,6 @@ export default function UpdateAssetMaintenance() {
         ></Table>
       ),
     },
-    {
-      label: t("List công việc kiểm tra"),
-      key: "4",
-      children: (
-        <AssetModelCheckListTab
-          assetModel={assetModelChange}
-          disabledTrue={true}
-        />
-      ),
-    },
   ];
   return (
     <>
@@ -520,11 +510,7 @@ export default function UpdateAssetMaintenance() {
                           "assetMaintenance.list.search.asset_type_option.measuring",
                         )}
                       </Radio>
-                      <Radio value={3}>
-                        {t(
-                          "assetMaintenance.list.search.asset_type_option.facility",
-                        )}
-                      </Radio>
+                    
                     </Radio.Group>
                   </Form.Item>
                 </Col>

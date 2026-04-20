@@ -14,17 +14,14 @@ import {
     message,
     DatePicker,
 } from "antd";
-import dayjs from "dayjs";
 import * as _unitOfWork from "../../../api";
 import Confirm from "../../../components/modal/Confirm";
 import { FORMAT_DATE } from "../../../utils/constant";
 import { useCustomNav } from "../../../helper/navigate-helper";
 import useAuth from '../../../contexts/authContext';
 import OrderPurchaseDetail from "./OrderPurchaseDetail";
-import { parseDateDDMMYYYY } from "../../../helper/date-helper";
 import { parsePriceVnd } from "../../../helper/price-helper";
 import { useTranslation } from "react-i18next";
-import { filterOption } from "../../../helper/search-select-helper";
 import CustomSelectAdd from "../../../components/common/CustomSelectAdd";
 import { notiAction } from "../../../helper/noti-action-helper";
 
@@ -37,12 +34,9 @@ export default function CreateStockReceipt() {
     const [isOpenModalDetail, setIsOpenModalDetail] = useState(false)
     const [data, setData] = useState([])
     const [departments, setDepartments] = useState([]);
-    const [branches, setBranches] = useState([]);
     const [suppliers, setSuppliers] = useState([]);
     const [editingDetail, setEditingDetail] = useState(null);
     const [editingIndex, setEditingIndex] = useState(null);
-    const [purchaseOrder, setPurchaseOrder] = useState();
-    const [locationDest, setLocationDest] = useState([]);
 
     useEffect(() => {
         form.setFieldsValue({
@@ -51,7 +45,6 @@ export default function CreateStockReceipt() {
         });
         fetchDepartments();
         fetchSuppliers();
-        fetchStockLocation();
     }, []);
 
     const fetchDepartments = async () => {
@@ -72,62 +65,6 @@ export default function CreateStockReceipt() {
         }
     }
 
-    const fetchStockLocation = async () => {
-        const payload = {
-            page: 1,
-            limit: 100,
-        }
-        const res = await _unitOfWork.stockLocation.getListStockLocation(payload);
-        if (res?.code === 1 && res?.results) {
-            const option = res.results?.results.map(item => ({
-                label: item.name,
-                value: item.id,
-            }));
-            setLocationDest(option)
-        }
-    }
-
-
-
-    const handleChangePurchaseOrder = async (id) => {
-        const res = await _unitOfWork.purchaseOrder.getPurchaseOrderDetailById({ id })
-        if (res.data) {
-            const dataTable = await Promise.all(
-                res.data.map(async (item) => {
-                    if (item.itemType == "SpareParts") {
-                        return {
-                            ...item,
-                            code: item.item?.code,
-                            name: item.item?.sparePartsName,
-                            item: item.item.id,
-                            purchaseOrderDetail: item._id || item.id,
-                            uomName: item.item?.uomId?.uomName,
-                            qty: item.remainQty,
-                            vatAmount: (parseFloat(item.vatPercent || 0) / 100) * parseFloat(item.qty || 0) * parseFloat(item.unitPrice || 0),
-                            totalAmount:
-                                (parseFloat(item.vatPercent || 0) / 100) * parseFloat(item.qty || 0) * parseFloat(item.unitPrice || 0) +
-                                parseFloat(item.qty || 0) * parseFloat(item.unitPrice || 0),
-                        };
-                    } else {
-                        return {
-                            ...item,
-                            code: item.item?.assetModelName,
-                            name: item.item?.asset?.assetName,
-                            item: item.item.id,
-                            purchaseOrderDetail: item._id || item.id,
-                            qty: item.remainQty,
-                            vatAmount: (parseFloat(item.vatPercent || 0) / 100) * parseFloat(item.qty || 0) * parseFloat(item.unitPrice || 0),
-                            totalAmount:
-                                (parseFloat(item.vatPercent || 0) / 100) * parseFloat(item.qty || 0) * parseFloat(item.unitPrice || 0) +
-                                parseFloat(item.qty || 0) * parseFloat(item.unitPrice || 0),
-
-                        };
-                    }
-                })
-            );
-            setData(dataTable);
-        }
-    }
 
     const handleAddDetail = async (newData) => {
         if (editingIndex !== null) {
@@ -345,21 +282,6 @@ export default function CreateStockReceipt() {
                                 name="createdName"
                             >
                                 <Input disabled value={user.fullName} />
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item
-                                labelAlign="left"
-                                label={t("receiptPurchase.form.locationDest")}
-                                name="locationDest"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: t("Không bỏ trống"),
-                                    },
-                                ]}
-                            >
-                                <Select options={locationDest}></Select>
                             </Form.Item>
                         </Col>
                         <Col span={12}>

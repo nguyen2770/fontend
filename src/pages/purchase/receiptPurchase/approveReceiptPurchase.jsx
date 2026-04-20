@@ -51,7 +51,6 @@ export default function ApproveReceiptPurchase() {
         fetchReceiptPurchaseById(id);
         fetchDepartments();
         fetchDataTable();
-        fetchStockLocation();
         fetchSuppliers();
     }, []);
 
@@ -76,20 +75,7 @@ export default function ApproveReceiptPurchase() {
         }
     }
 
-    const fetchStockLocation = async () => {
-        const payload = {
-            page: 1,
-            limit: 100,
-        }
-        const res = await _unitOfWork.stockLocation.getListStockLocation(payload);
-        if (res?.code === 1 && res?.results) {
-            const option = res.results?.results.map(item => ({
-                label: item.name,
-                value: item.id,
-            }));
-            setLocationDest(option)
-        }
-    }
+   
     const fetchDepartments = async () => {
         const department = await _unitOfWork.department.getAllDepartment();
         if (department?.data) {

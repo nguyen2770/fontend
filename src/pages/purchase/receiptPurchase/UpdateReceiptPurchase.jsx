@@ -32,17 +32,14 @@ import { notiAction } from "../../../helper/noti-action-helper";
 export default function UpdateReceiptPurchase() {
     const [form] = Form.useForm();
     const navigate = useCustomNav();
-    const { user } = useAuth();
     const { t } = useTranslation();
     const [isOpenModalDetail, setIsOpenModalDetail] = useState(false)
     const [data, setData] = useState([])
     const [departments, setDepartments] = useState([]);
-    const [branches, setBranches] = useState([])
     const [editingDetail, setEditingDetail] = useState(null);
     const [editingIndex, setEditingIndex] = useState(null);
-    const [purchaseOrder, setPurchaseOrder] = useState([])
     const [suppliers, setSuppliers] = useState([]);
-    const [locationDest, setLocationDest] = useState([]);
+
 
     const { id } = useParams();
 
@@ -51,7 +48,7 @@ export default function UpdateReceiptPurchase() {
         fetchDepartments();
         fetchSuppliers();
         fetchDataTable();
-        fetchStockLocation();
+
 
     }, []);
 
@@ -65,21 +62,6 @@ export default function UpdateReceiptPurchase() {
             };
             form.setFieldsValue(converted);
 
-        }
-    }
-
-    const fetchStockLocation = async () => {
-        const payload = {
-            page: 1,
-            limit: 100,
-        }
-        const res = await _unitOfWork.stockLocation.getListStockLocation(payload);
-        if (res?.code === 1 && res?.results) {
-            const option = res.results?.results.map(item => ({
-                label: item.name,
-                value: item.id,
-            }));
-            setLocationDest(option)
         }
     }
 
@@ -101,58 +83,6 @@ export default function UpdateReceiptPurchase() {
         }
     }
 
-    const fetchBranches = async () => {
-        const branch = await _unitOfWork.branch.getAllBranch();
-        if (branch?.data) {
-            const option = branch.data.map(item => ({
-                label: item.name,
-                value: item.id,
-            }))
-            setBranches(option)
-        }
-    }
-
-    const handleChangePurchaseOrder = async (id) => {
-        const res = await _unitOfWork.purchaseOrder.getPurchaseOrderDetailById({ id })
-        if (res.data) {
-            const dataTable = await Promise.all(
-                res.data.map(async (item) => {
-                    if (item.itemType == "SpareParts") {
-                        return {
-                            ...item,
-                            code: item.item?.code,
-                            name: item.item?.sparePartsName,
-                            item: item.item.id || item.item,
-                            uomName: item.item.uomId?.uomName,
-                            currentQty: item.currentQty || null,
-                            qty: item.currentQty ?? item.qty,
-                            purchaseOrderDetail: item.id,
-                            vatAmount: (parseFloat(item.vatPercent || 0) / 100) * parseFloat(item.qty || 0) * parseFloat(item.unitPrice || 0),
-                            totalAmount:
-                                (parseFloat(item.vatPercent || 0) / 100) * parseFloat(item.qty || 0) * parseFloat(item.unitPrice || 0) +
-                                parseFloat(item.qty || 0) * parseFloat(item.unitPrice || 0),
-                        };
-                    } else {
-                        return {
-                            ...item,
-                            code: item.item?.assetModelName,
-                            name: item.item.asset?.assetName,
-                            item: item.item.id || item.item,
-                            qty: item.currentQty ?? item.qty,
-                            currentQty: item.currentQty || null,
-                            purchaseOrderDetail: item.id,
-                            vatAmount: (parseFloat(item.vatPercent || 0) / 100) * parseFloat(item.qty || 0) * parseFloat(item.unitPrice || 0),
-                            totalAmount:
-                                (parseFloat(item.vatPercent || 0) / 100) * parseFloat(item.qty || 0) * parseFloat(item.unitPrice || 0) +
-                                parseFloat(item.qty || 0) * parseFloat(item.unitPrice || 0),
-
-                        };
-                    }
-                })
-            );
-            setData(dataTable);
-        }
-    }
 
     const fetchDataTable = async () => {
         const res = await _unitOfWork.receiptPurchase.getReceiptPurchaseDetailById({ id: id });
@@ -413,21 +343,6 @@ export default function UpdateReceiptPurchase() {
                                 name="createdName"
                             >
                                 <Input disabled />
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item
-                                labelAlign="left"
-                                label={t("receiptPurchase.form.locationDest")}
-                                name="locationDest"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: t("Không bỏ trống"),
-                                    },
-                                ]}
-                            >
-                                <Select options={locationDest}></Select>
                             </Form.Item>
                         </Col>
                         <Col span={12}>

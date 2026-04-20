@@ -44,6 +44,7 @@ import { cleanEmptyValues } from "../../../helper/check-search-value";
 import ShowSuccess from "../../../components/modal/result/successNotification";
 import ShowError from "../../../components/modal/result/errorNotification";
 import Comfirm from "../../../components/modal/Confirm";
+import CancelReason from "../../../components/modal/CancelReason";
 
 export default function WarehouseAwaitingLiquidation() {
   const { t } = useTranslation();
@@ -52,6 +53,8 @@ export default function WarehouseAwaitingLiquidation() {
   const { setHeaderTitle } = useHeader();
   const [totalRecord, setTotalRecord] = useState(0);
   const [assetMaintenances, setAssetMaintenances] = useState([]);
+  const [assetMaintenance, setAssetMaintenance] = useState([]);
+  const [isOpenCancelReason, setIsOpenCancelReason] = useState(false);
   const [searchForm] = Form.useForm();
   const [isOpenDrawerSearch, setIsOpenDrawerSearch] = useState(false);
   const { permissions, companySetting } = useAuth();
@@ -115,6 +118,27 @@ export default function WarehouseAwaitingLiquidation() {
     setPage(1);
     searchForm.resetFields();
     fetchGetListAssetMiantenance(1);
+  };
+
+  const onClickDisposalAsset = async (id, cancelReason, fileList) => {
+    const res = await _unitOfWork.assetMaintenance.disposalAsset({
+      id,
+      fileList,
+    });
+    if (res) {
+      ShowSuccess(
+        "topRight",
+        t("common.notifications"),
+        t("common.messages.success.successfully"),
+      );
+      fetchGetListAssetMiantenance(page, searchFilter);
+    } else {
+      ShowError(
+        "topRight",
+        t("common.notifications"),
+        t("common.errors.failed"),
+      );
+    }
   };
   const placeholderMap = {
     searchText:
@@ -297,8 +321,11 @@ export default function WarehouseAwaitingLiquidation() {
                 icon={<CloseCircleOutlined />}
                 size="small"
                 style={{ color: '#fa8c16' }}
+                onClick={() => {
+                  setIsOpenCancelReason(true);
+                  setAssetMaintenance(record);
+                }}
 
-                
               />
             </Tooltip>
           </div>
@@ -411,6 +438,16 @@ export default function WarehouseAwaitingLiquidation() {
           }
         }}
       />
+
+      <CancelReason
+        open={isOpenCancelReason}
+        close={() => setIsOpenCancelReason(false)}
+        onFinish={(cancelReason, fileList) => {
+          onClickDisposalAsset(assetMaintenance.id, cancelReason, fileList);
+        }}
+      // cancelReason={assetMaintenance.cancelReason}
+      // type={type}
+      ></CancelReason>
     </div>
   );
 }

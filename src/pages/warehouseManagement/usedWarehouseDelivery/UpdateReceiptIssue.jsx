@@ -426,21 +426,6 @@ labelWrap
                         <Col span={12}>
                             <Form.Item
                                 labelAlign="left"
-                                label={t("stockIssue.form.branch")}
-                                name="branch"
-                            >
-                                <CustomSelectAdd
-                                    placeholder={t(
-                                        "users.create.placeholders.branch"
-                                    )}
-                                    options={branches}
-                                    onAdd={addBranch}
-                                />
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item
-                                labelAlign="left"
                                 label={t("stockIssue.form.department")}
                                 name="department"
                             >

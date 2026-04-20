@@ -366,7 +366,7 @@ export default function AssetMaintenance() {
   };
 
   const checkHidenReopen = status => {
-    if (status == assetStatusOptions.PENDING_CANCEL || status === assetStatusOptions.PENDING_RETURN ) {
+    if (status == assetStatusOptions.PENDING_CANCEL || status === assetStatusOptions.PENDING_RETURN) {
       return true;
     }
     return false;
@@ -490,7 +490,7 @@ export default function AssetMaintenance() {
       title: t("preventiveSchedule.modal.map_title"),
       render: (text, record) => (
         <div>
-       
+
           <LabelValue
             label={t("breakdown.map.fields.department")}
             value={record?.departmentName}
@@ -568,24 +568,12 @@ export default function AssetMaintenance() {
             icon: <PlusCircleOutlined />,
             onClick: () => onClickClone(record),
           },
-          record.assetStyle !== assetStyleMap.accessories && {
-            key: "update_the_checklist",
-            label: t("assetMaintenance.actions.update_the_checklist"),
-            icon: <IssuesCloseOutlined />,
-            onClick: () => onClickUpdateChecklist(record),
-          },
-          record.assetStyle !== assetStyleMap.accessories && {
-            key: "parent",
-            label: t("Thiết bị phụ của tài sản"),
-            icon: <ApartmentOutlined />,
-            onClick: () => onClickAccessories(record),
-          },
           checkPermission(permissions, permissionCodeConstant.asset_cancel) &&
           checkHidenCancel(record.assetStatus) && {
             key: "cancel",
             label: t("Xác nhận hủy chờ thanh lý"),
             icon: <StopOutlined />,
-            onClick: () => { onClickOpenModalCancel(record); setType = ("Cancel") }
+            onClick: () => { onClickOpenModalCancel(record); setType("Cancel") }
           },
           checkPermission(
             permissions,
@@ -649,14 +637,14 @@ export default function AssetMaintenance() {
               permissions,
               permissionCodeConstant.asset_view_detail,
             ) && (
-              <Tooltip title={t("assetMaintenance.actions.detail")}>
-                <Button
-                  icon={<EyeOutlined />}
-                  size="small"
-                  onClick={() => onClickGoToView(record)}
-                />
-              </Tooltip>
-            )}
+                <Tooltip title={t("assetMaintenance.actions.detail")}>
+                  <Button
+                    icon={<EyeOutlined />}
+                    size="small"
+                    onClick={() => onClickGoToView(record)}
+                  />
+                </Tooltip>
+              )}
 
             {/* dropdown gom action */}
             {menuItems.length > 0 && (
@@ -882,11 +870,11 @@ export default function AssetMaintenance() {
                 permissions,
                 permissionCodeConstant.asset_create,
               ) && (
-                <Button type="primary" onClick={() => onOpenCreate()}>
-                  <PlusOutlined />
-                  {t("assetMaintenance.actions.create")}
-                </Button>
-              )}
+                  <Button type="primary" onClick={() => onOpenCreate()}>
+                    <PlusOutlined />
+                    {t("assetMaintenance.actions.create")}
+                  </Button>
+                )}
             </div>
           </Col>
 
@@ -907,21 +895,21 @@ export default function AssetMaintenance() {
           bordered
           pagination={false}
           scroll={{ x: "max-content" }}
-          // rowClassName={() => "custom-row"}
-          // onRow={(record) => {
-          //   const option = assetStatusOptions.Options.find(
-          //     (opt) => opt.value === record.assetStatus,
-          //   );
+        // rowClassName={() => "custom-row"}
+        // onRow={(record) => {
+        //   const option = assetStatusOptions.Options.find(
+        //     (opt) => opt.value === record.assetStatus,
+        //   );
 
-          //   return {
-          //     style: {
-          //       "--row-color": option?.color
-          //         ? `${option.color}15` // nền nhẹ
-          //         : "#fff",
-          //       "--row-border": option?.color || "#d9d9d9",
-          //     },
-          //   };
-          // }}
+        //   return {
+        //     style: {
+        //       "--row-color": option?.color
+        //         ? `${option.color}15` // nền nhẹ
+        //         : "#fff",
+        //       "--row-border": option?.color || "#d9d9d9",
+        //     },
+        //   };
+        // }}
         ></Table>
         <Pagination
           className="pagination-table mt-2 mb-3"
@@ -949,7 +937,7 @@ export default function AssetMaintenance() {
         templateUrl={
           companySetting.createNewUsingAFormula ===
             createNewUsingAFormulaType.healthInsurance ||
-          companySetting.createNewUsingAFormula ===
+            companySetting.createNewUsingAFormula ===
             createNewUsingAFormulaType.healthInsuranceDecree3176
             ? "/file/templateAsset.xlsx"
             : "/file/templateAssetMaintenanceNotHealthInsurance.xlsx"

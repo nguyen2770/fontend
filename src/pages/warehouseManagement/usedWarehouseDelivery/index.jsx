@@ -57,7 +57,6 @@ export default function RequestIssue() {
     useEffect(() => {
         setHeaderTitle(t("stockIssue.header.general"));
         // fetchDepartments();
-        // fetchBranches();
     }, []);
 
     useEffect(() => {
@@ -89,7 +88,6 @@ export default function RequestIssue() {
                         const createdAt = dayjs(item.createdAt).format(FORMAT_DATE);
                         return {
                             ...item,
-                            branchName: item.branch?.name,
                             departmentName: item.department?.departmentName,
                             createdAt,
                         };
@@ -165,11 +163,6 @@ export default function RequestIssue() {
             title: t("stockIssue.fields.orderCode"),
             dataIndex: "code",
             key: "code",
-        },
-        {
-            title: t("stockIssue.form.branch"),
-            dataIndex: "branchName",
-            key: "branch",
         },
         {
             title: t("stockIssue.form.department"),

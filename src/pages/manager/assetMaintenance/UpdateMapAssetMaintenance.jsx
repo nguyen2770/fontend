@@ -38,11 +38,11 @@ export default function UpdateMapAssetMaintenance({
 
     useEffect(() => {
         if (open) {
-            fetchAllProvince();
+            // fetchAllProvince();
             fetchAllFloor();
             fetchAllDepartment();
             fetchAllBuilding();
-            fetchAllBranch();
+            // fetchAllBranch();
             fetchCustomers();
         }
     }, [open]);
@@ -220,50 +220,6 @@ export default function UpdateMapAssetMaintenance({
                         <Col span={12}></Col>
                         <Divider></Divider>
                         <Col span={12}>
-                            <Form.Item name="province" label={t("assetMaintenance.form.fields.province")} labelAlign="left">
-                                <Select
-                                    placeholder={t("assetMaintenance.form.placeholders.province")}
-                                    options={provinces}
-                                    onChange={(value) => {
-                                        form.setFieldsValue({ commune: null });
-                                        setCommunes([]);
-                                        fetchAllCommunesByProvince(value);
-                                    }}
-                                    showSearch
-                                    optionFilterProp="label"
-                                    filterOption={(input, option) =>
-                                        option.label.toLowerCase().includes(input.toLowerCase())
-                                    }
-                                />
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item name="commune" label={t("assetMaintenance.form.fields.commune")} labelAlign="left">
-                                <Select
-                                    placeholder={t("assetMaintenance.form.placeholders.commune")}
-                                    options={communes}
-                                    showSearch
-                                    optionFilterProp="label"
-                                    filterOption={(input, option) =>
-                                        option.label.toLowerCase().includes(input.toLowerCase())
-                                    }
-                                />
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item name="branch" label={t("assetMaintenance.form.fields.branch")} labelAlign="left">
-                                <Select
-                                    showSearch
-                                    placeholder={t("assetMaintenance.form.placeholders.branch")}
-                                    options={branchs?.map((item) => ({
-                                        value: item.id,
-                                        label: item.name,
-                                    }))}
-                                    filterOption={filterOption}
-                                />
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
                             <Form.Item name="building" label={t("assetMaintenance.form.fields.building")} labelAlign="left">
                                 <Select
                                     showSearch
@@ -325,6 +281,8 @@ export default function UpdateMapAssetMaintenance({
                             </Button>
                         </Col>
                     </Row> */}
+
+                    <Divider> Biên bản di chuyển tài sản</Divider>
 
                     <AttachmentModel
                         value={fileList}

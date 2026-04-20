@@ -34,7 +34,7 @@ import ShowError from "../../../components/modal/result/errorNotification";
 
 import TabPane from "antd/es/tabs/TabPane";
 import TabsMap from "./TabsMap";
-import ChangeAssetModelModal from "../../../components/modal/assetModel/ChangeAssetModelModal";
+import ChangeAssetModelModalWaitUse from "../../../components/modal/assetModel/ChangeAssetModelModalWaitUse";
 import useHeader from "../../../contexts/headerContext";
 import { formatCurrency, parseCurrency } from "../../../helper/price-helper";
 import {
@@ -342,16 +342,6 @@ export default function CreateAssetMaintenance() {
         ></Table>
       ),
     },
-    {
-      label: t("List công việc kiểm tra"),
-      key: "4",
-      children: (
-        <AssetModelCheckListTab
-          assetModel={assetModelChange}
-          disabledTrue={true}
-        />
-      ),
-    },
   ];
   return (
     <>
@@ -403,11 +393,6 @@ export default function CreateAssetMaintenance() {
                       <Radio value={2}>
                         {t(
                           "assetMaintenance.list.search.asset_type_option.measuring",
-                        )}
-                      </Radio>
-                      <Radio value={3}>
-                        {t(
-                          "assetMaintenance.list.search.asset_type_option.facility",
                         )}
                       </Radio>
                     </Radio.Group>
@@ -1068,7 +1053,7 @@ export default function CreateAssetMaintenance() {
         </Card>
       </Form>
 
-      <ChangeAssetModelModal
+      <ChangeAssetModelModalWaitUse
         open={isOpenAssetModel}
         handleCancel={() => setIsOpenAssetModel(false)}
         form={form}

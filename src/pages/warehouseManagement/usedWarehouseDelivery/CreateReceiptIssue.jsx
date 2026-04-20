@@ -50,11 +50,8 @@ export default function CreatepurchaseOrder() {
         });
         setHeaderTitle(t("stockIssue.header.general"));
         fetchDepartments();
-        fetchBranches();
         fetchIssuedBy();
-        // fetchReceiver();
         fetchStockLocation();
-        // fetchRequestIssue();
     }, []);
 
     const fetchDepartments = async () => {
@@ -78,17 +75,6 @@ export default function CreatepurchaseOrder() {
             setBranches(option)
         }
     }
-
-    // const fetchRequestIssue = async () => {
-    //     const res = await _unitOfWork.requestIssue.getAllRequestIssue()
-    //     if (res) {
-    //         const option = res.data.map(item => ({
-    //             label: item.code,
-    //             value: item.id,
-    //         }))
-    //         setPurchaseOrder(option)
-    //     }
-    // }
 
     const fetchStockLocation = async () => {
         const payload = {
@@ -119,16 +105,6 @@ export default function CreatepurchaseOrder() {
         }
     }
 
-    const fetchReceiver = async () => {
-        const res = await _unitOfWork.customer.getAllCustomer()
-        if (res) {
-            const option = res.data.map(item => ({
-                label: item.firstName + " " + item.lastName,
-                value: item.id,
-            }))
-            setReceiver(option)
-        }
-    }
 
     const handleAddDetail = async (newData) => {
         if (newData.id) {
@@ -317,7 +293,7 @@ export default function CreatepurchaseOrder() {
     return (
         <div>
             <Form
-labelWrap
+                labelWrap
                 form={form}
                 labelCol={{
                     span: 8,
@@ -366,21 +342,6 @@ labelWrap
                                 ]}
                             >
                                 <Select options={locationSrc}></Select>
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item
-                                labelAlign="left"
-                                label={t("stockIssue.form.branch")}
-                                name="branch"
-                            >
-                                <CustomSelectAdd
-                                    placeholder={t(
-                                        "users.create.placeholders.branch"
-                                    )}
-                                    options={branches}
-                                    onAdd={addBranch}
-                                />
                             </Form.Item>
                         </Col>
                         <Col span={12}>

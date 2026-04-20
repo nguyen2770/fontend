@@ -163,16 +163,6 @@ export default function SuppliesNeed() {
             key: "code",
         },
         {
-            title: t("receiptPurchase.form.branch"),
-            dataIndex: "branchName",
-            key: "branch",
-        },
-        {
-            title: t("receiptPurchase.form.department"),
-            dataIndex: "departmentName",
-            key: "department",
-        },
-        {
             title: t("receiptPurchase.fields.note"),
             dataIndex: "description",
             key: "note",

@@ -348,7 +348,7 @@ labelWrap
                     assetModelChange={assetModelChange}
                     onSelectAssetModel={(_assetModel) => {
                         setAssetModelChange(_assetModel);
-                        fetchTotalAssetModelInventory(_assetModel._id);
+                        fetchTotalAssetModelInventory(_assetModel.id);
                         form.setFieldsValue({
                             asset: _assetModel?.asset._id,
                             assetName: _assetModel?.asset.assetName,

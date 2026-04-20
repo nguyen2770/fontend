@@ -5138,7 +5138,7 @@
     "asset_number": "Mã tài sản",
     "please_select_an_asset": "Vui lòng chọn tài sản!",
     "list": {
-      "title": "Quản lý tài sản",
+      "title": "Quản lý tài sản sử dụng",
       "title_info": "Thông tin tài sản",
       "total": "Tổng: {{count}}",
       "search": {
@@ -5248,8 +5248,8 @@
       "production_capability_per_month_placeholder": "Nhập lượng sản xuất theo tháng"
     },
     "form": {
-      "create_title": "Thêm mới bảo trì tài sản",
-      "update_title": "Cập nhật bảo trì tài sản",
+      "create_title": "Bàn giao tài sản",
+      "update_title": "Cập nhật tài sản ",
       "view_title": "Chi tiết tài sản",
       "equipment_specifications": "Thông số thiết bị",
       "tabs": {

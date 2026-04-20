@@ -49,9 +49,7 @@ export default function ApprovalReceiptIssue() {
 
     useEffect(() => {
         fetchDepartments();
-        fetchBranches();
         fetchIssuedBy();
-        // fetchReceiver();
         fetchRequestIssue();
         fetchReceiptIssueById();
         fetchDataTable();
@@ -64,11 +62,11 @@ export default function ApprovalReceiptIssue() {
         const res = await _unitOfWork.receiptIssue.getReceiptIssueById({ id: id })
         if (res) {
             const converted = {
-                ...res,
-                issueDate: res.issueDate ? dayjs(res.issueDate) : null,
-                createdName: res.createdBy.fullName,
+                ...res.receiptIssue,
+                issueDate: res.receiptIssue?.issueDate ? dayjs(res.receiptIssue?.issueDate) : null,
+                createdName: res.receiptIssue?.createdBy?.fullName,
             };
-            form.setFieldsValue(converted); setAction(res.action);
+            form.setFieldsValue(converted); setAction(res.receiptIssue?.action);
         }
     }
 
@@ -83,16 +81,6 @@ export default function ApprovalReceiptIssue() {
         }
     }
 
-    const fetchBranches = async () => {
-        const branch = await _unitOfWork.branch.getAllBranch();
-        if (branch?.data) {
-            const option = branch.data.map(item => ({
-                label: item.name,
-                value: item.id,
-            }))
-            setBranches(option)
-        }
-    }
 
     const fetchStockLocation = async () => {
         const payload = {
@@ -131,16 +119,6 @@ export default function ApprovalReceiptIssue() {
         }
     }
 
-    const fetchReceiver = async () => {
-        const res = await _unitOfWork.customer.getAllCustomer()
-        if (res) {
-            const option = res.data.map(item => ({
-                label: item.firstName + " " + item.lastName,
-                value: item.id,
-            }))
-            setReceiver(option)
-        }
-    }
 
     const handleChangeRequestIssue = async (id) => {
         const res = await _unitOfWork.requestIssue.getRequestIssuesDetailById({ id })
@@ -379,7 +357,7 @@ export default function ApprovalReceiptIssue() {
     return (
         <div>
             <Form
-labelWrap
+                labelWrap
                 form={form}
                 labelCol={{
                     span: 8,
@@ -447,15 +425,6 @@ labelWrap
                                 ]}
                             >
                                 <Select options={locationSrc}></Select>
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item
-                                labelAlign="left"
-                                label={t("stockIssue.form.branch")}
-                                name="branch"
-                            >
-                                <Select options={branches}></Select>
                             </Form.Item>
                         </Col>
                         <Col span={12}>

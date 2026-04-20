@@ -326,20 +326,16 @@ export default function ViewAssetMaintaenance() {
                           "assetMaintenance.list.search.asset_type_option.measuring",
                         )}
                       </Radio>
-                      <Radio value={3}>
-                        {t(
-                          "assetMaintenance.list.search.asset_type_option.facility",
-                        )}
-                      </Radio>
+
                     </Radio.Group>
                   </Form.Item>
                 </Col>
                 {companySetting.createNewUsingAFormula &&
                   companySetting?.autoGenerateAssetNumber &&
-                 (companySetting.createNewUsingAFormula ===
-                         createNewUsingAFormulaType.healthInsurance ||
-                         companySetting.createNewUsingAFormula ===
-                           createNewUsingAFormulaType.healthInsuranceDecree3176) && (
+                  (companySetting.createNewUsingAFormula ===
+                    createNewUsingAFormulaType.healthInsurance ||
+                    companySetting.createNewUsingAFormula ===
+                    createNewUsingAFormulaType.healthInsuranceDecree3176) && (
                     <Col span={12}>
                       <Form.Item
                         labelAlign="left"

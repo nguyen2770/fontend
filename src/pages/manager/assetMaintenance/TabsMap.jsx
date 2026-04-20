@@ -80,7 +80,7 @@ export default function TabsMap({ form }) {
   return (
     <>
       <Row gutter={[16]}>
-        <Col span={12}>
+        {/* <Col span={12}>
           <Form.Item
             name="province"
             label={t("assetMaintenance.form.fields.province")}
@@ -119,7 +119,7 @@ export default function TabsMap({ form }) {
               }
             />
           </Form.Item>
-        </Col>
+        </Col> */}
 
         {/* <Col span={12}>
           <Form.Item

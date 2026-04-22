@@ -201,7 +201,7 @@ labelWrap
                     total={totalRecord}
                 />
 
-                {
+                {/* {
                     locationData
                         .filter(ld => ld.inventory?.results?.length > 0)
                         .map(ld => (
@@ -216,7 +216,7 @@ labelWrap
                                 />
                             </>
                         ))
-                }
+                } */}
 
                 <ModelDetailStock
                     open={isOpenDetail}

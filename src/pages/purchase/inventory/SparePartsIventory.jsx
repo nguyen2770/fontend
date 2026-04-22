@@ -152,7 +152,7 @@ const SparePartsInventory = () => {
     return (
         <div className="p-3" >
             <Form
-labelWrap
+                labelWrap
                 className="search-form"
                 form={searchForm}
                 layout="vertical"
@@ -209,7 +209,7 @@ labelWrap
                     pageSize={pagination.limit}
                     total={totalRecord}
                 />
-                {
+                {/* {
                     locationData
                         .filter(ld => ld.inventory?.results?.length > 0)
                         .map(ld => (
@@ -226,7 +226,7 @@ labelWrap
                                 />
                             </>
                         ))
-                }
+                } */}
                 <ModelDetailStock
                     open={isOpenDetail}
                     handleCancel={() => setIsOpenDetail(false)}

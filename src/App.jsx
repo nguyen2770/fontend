@@ -7,6 +7,7 @@ import { flatRoutes, staticPath } from "./router/routerConfig";
 import useAuth from "./contexts/authContext";
 import * as _unitOfWork from "./api";
 import { STORAGE_KEY } from "./utils/constant";
+import { socket } from "./socket";
 const Login = lazy(() => import("./pages/auth/Login"));
 function App() {
   const [loadingFirst, setLoadingFirst] = useState(true);
@@ -31,7 +32,23 @@ function App() {
       setLoadingFirst(false);
     }
   }, [isAuthenticated]);
+  useEffect(() => {
+    if (isAuthenticated && user && (user.id || user._id)) {
+      const userId = user.id || user._id;
+      socket.connect();
 
+      socket.on("connect", () => {
+        console.log("Socket connected! ID:", socket.id);
+        alert("Socket connected! ID:", socket.id);
+        socket.emit("join", userId);
+      });
+
+      return () => {
+        socket.off("connect");
+        socket.disconnect();
+      };
+    }
+  }, [isAuthenticated, user]);
   const fetchDataUser = async () => {
     let res = await _unitOfWork.user.getDataUser();
     if (res && res.code === 1) {

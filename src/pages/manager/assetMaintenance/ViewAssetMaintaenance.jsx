@@ -115,6 +115,9 @@ export default function ViewAssetMaintaenance() {
         depreciationType: res.data?.depreciationType,
         depreciationBase: res.data?.depreciationBase,
         customer: res.data?.customer?.id,
+        warrantyEndDate: res.data?.warrantyEndDate
+          ? dayjs(res.data?.warrantyEndDate).add(7, "hour")
+          : null,
       });
 
       setAssetModelChange(res.data?.assetModel);
@@ -772,6 +775,19 @@ export default function ViewAssetMaintaenance() {
                       placeholder={t(
                         "assetMaintenance.form.placeholders.registration_number",
                       )}
+                    />
+                  </Form.Item>
+                </Col>
+                <Col span={12}>
+                  <Form.Item
+                    label={"Hạn bảo hành"}
+                    name="warrantyEndDate"
+                    labelAlign="left"
+                  >
+                    <DatePicker
+                      style={{ width: "100%" }}
+                      placeholder={"Nhập hạn bảo hành"}
+                      format={FORMAT_DATE}
                     />
                   </Form.Item>
                 </Col>

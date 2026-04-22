@@ -91,7 +91,7 @@ export default function CreateAssetMaintenance() {
       (companySetting.createNewUsingAFormula ===
         createNewUsingAFormulaType.healthInsurance ||
         companySetting.createNewUsingAFormula ===
-          createNewUsingAFormulaType.healthInsuranceDecree3176)
+        createNewUsingAFormulaType.healthInsuranceDecree3176)
     ) {
       generateAssetNumber();
     }
@@ -306,10 +306,10 @@ export default function CreateAssetMaintenance() {
       render: (_text, record) =>
         record.sparePart?.lifeSpan
           ? record.sparePart?.lifeSpan +
-            " " +
-            frequencyOptions.Option.find(
-              (item) => item.value === record.sparePart?.Period,
-            )?.label
+          " " +
+          frequencyOptions.Option.find(
+            (item) => item.value === record.sparePart?.Period,
+          )?.label
           : "",
     },
   ];
@@ -403,7 +403,7 @@ export default function CreateAssetMaintenance() {
                   (companySetting.createNewUsingAFormula ===
                     createNewUsingAFormulaType.healthInsurance ||
                     companySetting.createNewUsingAFormula ===
-                      createNewUsingAFormulaType.healthInsuranceDecree3176) && (
+                    createNewUsingAFormulaType.healthInsuranceDecree3176) && (
                     <Col span={12}>
                       <Form.Item
                         labelAlign="left"
@@ -422,11 +422,11 @@ export default function CreateAssetMaintenance() {
                   )}
                 {!companySetting.createNewUsingAFormula ||
                   companySetting.createNewUsingAFormula !==
-                    createNewUsingAFormulaType.healthInsurance ||
+                  createNewUsingAFormulaType.healthInsurance ||
                   (companySetting.createNewUsingAFormula !==
                     createNewUsingAFormulaType.healthInsuranceDecree3176 && (
-                    <Col span={12}></Col>
-                  ))}
+                      <Col span={12}></Col>
+                    ))}
               </Row>
 
               <Row gutter={[16]}>
@@ -581,8 +581,8 @@ export default function CreateAssetMaintenance() {
                           (companySetting.createNewUsingAFormula ===
                             createNewUsingAFormulaType.healthInsurance ||
                             companySetting.createNewUsingAFormula ===
-                              createNewUsingAFormulaType.healthInsuranceDecree3176) &&
-                          companySetting?.autoGenerateAssetNumber
+                            createNewUsingAFormulaType.healthInsuranceDecree3176) &&
+                            companySetting?.autoGenerateAssetNumber
                             ? t("assetMaintenance.generated_asset_number")
                             : t("assetMaintenance.asset_number")
                         }
@@ -591,7 +591,7 @@ export default function CreateAssetMaintenance() {
                           (companySetting.createNewUsingAFormula ===
                             createNewUsingAFormulaType.healthInsurance ||
                             companySetting.createNewUsingAFormula ===
-                              createNewUsingAFormulaType.healthInsuranceDecree3176)
+                            createNewUsingAFormulaType.healthInsuranceDecree3176)
                         }
                       />
                     </Form.Item>
@@ -950,6 +950,19 @@ export default function CreateAssetMaintenance() {
                       placeholder={t(
                         "assetMaintenance.form.placeholders.registration_number",
                       )}
+                    />
+                  </Form.Item>
+                </Col>
+                <Col span={12}>
+                  <Form.Item
+                    label={"Hạn bảo hành"}
+                    name="warrantyEndDate"
+                    labelAlign="left"
+                  >
+                    <DatePicker
+                      style={{ width: "100%" }}
+                      placeholder={"Nhập hạn bảo hành"}
+                      format={FORMAT_DATE}
                     />
                   </Form.Item>
                 </Col>

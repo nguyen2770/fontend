@@ -86,7 +86,7 @@ export default function UpdateAssetMaintenance() {
       (companySetting.createNewUsingAFormula ===
         createNewUsingAFormulaType.healthInsurance ||
         companySetting.createNewUsingAFormula ===
-          createNewUsingAFormulaType.healthInsuranceDecree3176)
+        createNewUsingAFormulaType.healthInsuranceDecree3176)
     ) {
       generateAssetNumber();
     }
@@ -99,7 +99,7 @@ export default function UpdateAssetMaintenance() {
       (companySetting.createNewUsingAFormula ===
         createNewUsingAFormulaType.healthInsurance ||
         companySetting.createNewUsingAFormula ===
-          createNewUsingAFormulaType.healthInsuranceDecree3176)
+        createNewUsingAFormulaType.healthInsuranceDecree3176)
     ) {
       generateAssetNumber();
     }
@@ -113,7 +113,7 @@ export default function UpdateAssetMaintenance() {
       (companySetting.createNewUsingAFormula ===
         createNewUsingAFormulaType.healthInsurance ||
         companySetting.createNewUsingAFormula ===
-          createNewUsingAFormulaType.healthInsuranceDecree3176)
+        createNewUsingAFormulaType.healthInsuranceDecree3176)
     ) {
       generateAssetNumber();
     }
@@ -195,8 +195,8 @@ export default function UpdateAssetMaintenance() {
         supplier: res.data?.assetModel?.supplier?.supplierName,
         isMovable:
           res.data?.isMovable === true ||
-          res.data?.isMovable === 1 ||
-          res.data?.isMovable === "true"
+            res.data?.isMovable === 1 ||
+            res.data?.isMovable === "true"
             ? true
             : false,
         purchaseDate: res.data?.purchaseDate
@@ -217,6 +217,9 @@ export default function UpdateAssetMaintenance() {
           !isClone && res.data?.installationDate
             ? dayjs(res.data.installationDate).add(7, "hours")
             : null,
+        warrantyEndDate: res.data?.warrantyEndDate
+          ? dayjs(res.data?.warrantyEndDate).add(7, "hour")
+          : null,
       });
       setAssetModelChange(res.data?.assetModel);
       setIsNullDepreciationType(res?.data?.depreciationType === "null");
@@ -356,7 +359,7 @@ export default function UpdateAssetMaintenance() {
     }
   };
 
-  const fetchAssetModels = async () => {};
+  const fetchAssetModels = async () => { };
 
   const onClickSearchAsset = () => {
     setIsOpenAssetModel(true);
@@ -414,10 +417,10 @@ export default function UpdateAssetMaintenance() {
       render: (_text, record) =>
         record.sparePart?.lifeSpan
           ? record.sparePart?.lifeSpan +
-            " " +
-            frequencyOptions.Option.find(
-              (item) => item.value === record.sparePart?.Period,
-            )?.label
+          " " +
+          frequencyOptions.Option.find(
+            (item) => item.value === record.sparePart?.Period,
+          )?.label
           : "",
     },
   ];
@@ -510,7 +513,7 @@ export default function UpdateAssetMaintenance() {
                           "assetMaintenance.list.search.asset_type_option.measuring",
                         )}
                       </Radio>
-                    
+
                     </Radio.Group>
                   </Form.Item>
                 </Col>
@@ -519,7 +522,7 @@ export default function UpdateAssetMaintenance() {
                   (companySetting.createNewUsingAFormula ===
                     createNewUsingAFormulaType.healthInsurance ||
                     companySetting.createNewUsingAFormula ===
-                      createNewUsingAFormulaType.healthInsuranceDecree3176) && (
+                    createNewUsingAFormulaType.healthInsuranceDecree3176) && (
                     <Col span={12}>
                       <Form.Item
                         labelAlign="left"
@@ -541,9 +544,9 @@ export default function UpdateAssetMaintenance() {
                     (companySetting.createNewUsingAFormula ===
                       createNewUsingAFormulaType.healthInsurance ||
                       companySetting.createNewUsingAFormula ===
-                        createNewUsingAFormulaType.healthInsuranceDecree3176) && (
-                    <Col span={12}></Col>
-                  ))}
+                      createNewUsingAFormulaType.healthInsuranceDecree3176) && (
+                      <Col span={12}></Col>
+                    ))}
               </Row>
 
               <Row gutter={[16]}>
@@ -698,8 +701,8 @@ export default function UpdateAssetMaintenance() {
                           (companySetting.createNewUsingAFormula ===
                             createNewUsingAFormulaType.healthInsurance ||
                             companySetting.createNewUsingAFormula ===
-                              createNewUsingAFormulaType.healthInsuranceDecree3176) &&
-                          companySetting?.autoGenerateAssetNumber
+                            createNewUsingAFormulaType.healthInsuranceDecree3176) &&
+                            companySetting?.autoGenerateAssetNumber
                             ? t("assetMaintenance.generated_asset_number")
                             : t("assetMaintenance.asset_number")
                         }
@@ -708,7 +711,7 @@ export default function UpdateAssetMaintenance() {
                           (companySetting.createNewUsingAFormula ===
                             createNewUsingAFormulaType.healthInsurance ||
                             companySetting.createNewUsingAFormula ===
-                              createNewUsingAFormulaType.healthInsuranceDecree3176)
+                            createNewUsingAFormulaType.healthInsuranceDecree3176)
                         }
                       />
                     </Form.Item>
@@ -1069,6 +1072,20 @@ export default function UpdateAssetMaintenance() {
                       placeholder={t(
                         "assetMaintenance.form.placeholders.registration_number",
                       )}
+                    />
+                  </Form.Item>
+                </Col>
+
+                <Col span={12}>
+                  <Form.Item
+                    label={"Hạn bảo hành"}
+                    name="warrantyEndDate"
+                    labelAlign="left"
+                  >
+                    <DatePicker
+                      style={{ width: "100%" }}
+                      placeholder={"Nhập hạn bảo hành"}
+                      format={FORMAT_DATE}
                     />
                   </Form.Item>
                 </Col>

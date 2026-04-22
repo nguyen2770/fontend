@@ -397,6 +397,10 @@ export default function Breakdown() {
             label={t("breakdown.list.columns.deadline")}
             value={parseDate(record?.incidentDeadline)}
           />
+          <LabelValue
+            label={"Hạn bảo hành"}
+            value={parseDate(record?.warrantyEndDate)}
+          />
         </div>
       ),
     },
@@ -563,15 +567,15 @@ export default function Breakdown() {
               permissions,
               permissionCodeConstant.breakdown_view_detail,
             ) && (
-              <Tooltip title={t("breakdown.list.tooltips.view")}>
-                <Button
-                  icon={<EyeFilled />}
-                  size="small"
-                  className="ml-2"
-                  onClick={() => onClicView(record)}
-                />
-              </Tooltip>
-            )}
+                <Tooltip title={t("breakdown.list.tooltips.view")}>
+                  <Button
+                    icon={<EyeFilled />}
+                    size="small"
+                    className="ml-2"
+                    onClick={() => onClicView(record)}
+                  />
+                </Tooltip>
+              )}
 
             {/* Dropdown gom tất cả action còn lại */}
             {items.length > 0 && (
@@ -819,16 +823,16 @@ export default function Breakdown() {
               permissions,
               permissionCodeConstant.breakdown_create,
             ) && (
-              <Button
-                key="1"
-                type="primary"
-                onClick={() => setIsOpenCreate(true)}
-                className="ml-2"
-              >
-                <PlusOutlined />
-                {t("breakdown.list.buttons.create")}
-              </Button>
-            )}
+                <Button
+                  key="1"
+                  type="primary"
+                  onClick={() => setIsOpenCreate(true)}
+                  className="ml-2"
+                >
+                  <PlusOutlined />
+                  {t("breakdown.list.buttons.create")}
+                </Button>
+              )}
           </Col>
           <Col span={24} style={{ textAlign: "right" }}>
             <span style={{ fontWeight: 600, fontSize: "16px", marginRight: 5 }}>

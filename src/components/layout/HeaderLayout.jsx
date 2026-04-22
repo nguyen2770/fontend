@@ -1,4 +1,4 @@
-import { Avatar, Button, Dropdown, Badge, Menu, Select, Typography, Space, Segmented, Form, Tooltip } from "antd";
+import { Avatar, Button, Dropdown, Badge, Menu, Select, Typography, Space, Segmented, Form, Tooltip, notification } from "antd";
 import {
   UserOutlined,
   BellOutlined,
@@ -33,6 +33,7 @@ import UpdateProfileModal from "../modal/updateProfileModal/UpdateProfileModal";
 import dayjs from "dayjs";
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/vi';
+import { socket } from "../../socket";
 
 dayjs.extend(relativeTime);
 dayjs.locale('vi');
@@ -65,6 +66,51 @@ export default function HeaderLayout(props) {
       setCurrentLanguage("vi");
     }
     fetchGetNotifications(1);
+    const handleNewNotification = (newNotif) => {
+      setTotalUnRead((prevCount) => prevCount + 1);
+      setNotifications((prevList) => {
+        const isExist = prevList.some(item => item.id === newNotif.id);
+        if (isExist) return prevList;
+        return [newNotif, ...prevList];
+      });
+      // if (document.visibilityState === 'visible') {
+      notification.info({
+        message: newNotif.Title || 'Có thông báo mới',
+        description: newNotif.text || 'Bạn nhận được 1 thông báo mới.',
+      });
+      // }
+    };
+
+    const handleUpdateCount = (data) => {
+      setTotalUnRead(data.count);
+    }
+    const handleStatusChanged = (data) => {
+      setNotifications(prev =>
+        prev.map(item => item.id === data.id ? { ...item, isOpen: data.isOpen } : item)
+      );
+    };
+    const handleReadAll = () => {
+      setNotifications(prev =>
+        prev.map(item => !item.isOpen ? { ...item, isOpen: true } : item)
+      );
+    };
+    const handleDeleted = (data) => {
+      setNotifications(prev => prev.filter(item => item.id !== data.id));
+    };
+
+    socket.on("new_notification", handleNewNotification);
+    socket.on("update_unread_count", handleUpdateCount);
+    socket.on("notification_status_changed", handleStatusChanged);
+    socket.on("notification_read_all", handleReadAll);
+    socket.on("notification_deleted", handleDeleted);
+
+    return () => {
+      socket.off("new_notification", handleNewNotification);
+      socket.off("update_unread_count", handleUpdateCount);
+      socket.off("notification_status_changed", handleStatusChanged);
+      socket.off("notification_read_all", handleReadAll);
+      socket.off("notification_deleted", handleDeleted);
+    };
   }, []);
   useEffect(() => {
     setValueBranch(branchChange);

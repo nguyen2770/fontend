@@ -5,5 +5,8 @@ import { rootURL } from "./api/config";
 
 export const socket = io(rootURL, {
   autoConnect: false,
-  // transports: ["websocket"],
+  transports: ["websocket"],
+  extraHeaders: {
+    "ngrok-skip-browser-warning": "true" 
+  }
 });

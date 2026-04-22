@@ -39,7 +39,6 @@ function App() {
 
       socket.on("connect", () => {
         console.log("Socket connected! ID:", socket.id);
-        alert("Socket connected! ID:", socket.id);
         socket.emit("join", userId);
       });
 

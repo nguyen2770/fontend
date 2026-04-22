@@ -57,3 +57,6 @@ export const updateLastLoginTime = () => {
 export const uploadUserExcel = (_body) => {
   return postData('users/upload-user', _body);
 }
+export const getListUserKS = (payload) => {
+  return get("users/get-list_ks", { ...payload });
+};

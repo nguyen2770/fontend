@@ -61,7 +61,7 @@ export default function PreventiveAssignUser({
       limit: PAGINATION.limit,
       fullName: search,
     };
-    let res = await _unitOfWork.user.getListUser(payload);
+    let res = await _unitOfWork.user.getListUserKS(payload);
     if (res && res.results) {
       setUsers(res.results);
       setTotalRecord(res.totalResults);

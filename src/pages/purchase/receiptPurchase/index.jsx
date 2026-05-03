@@ -172,11 +172,11 @@ export default function SuppliesNeed() {
             dataIndex: ["createdBy", "fullName"],
             key: "code",
         },
-        {
-            title: "Phòng ban",
-            dataIndex: ["department", "departmentName"],
-            key: "code",
-        },
+        // {
+        //     title: "Phòng ban",
+        //     dataIndex: ["department", "departmentName"],
+        //     key: "code",
+        // },
         {
             title: t("receiptPurchase.fields.note"),
             dataIndex: "description",

@@ -375,7 +375,7 @@ export default function ApproveReceiptPurchase() {
                                 <Select options={locationDest}></Select>
                             </Form.Item>
                         </Col>
-                        <Col span={12}>
+                        {/* <Col span={12}>
                             <Form.Item
                                 labelAlign="left"
                                 label={t("receiptPurchase.form.department")}
@@ -383,7 +383,7 @@ export default function ApproveReceiptPurchase() {
                             >
                                 <Select options={departments}></Select>
                             </Form.Item>
-                        </Col>
+                        </Col> */}
 
                         <Col span={12}>
                             <Form.Item

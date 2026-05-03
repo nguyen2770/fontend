@@ -284,7 +284,7 @@ export default function CreateStockReceipt() {
                                 <Input disabled value={user.fullName} />
                             </Form.Item>
                         </Col>
-                        <Col span={12}>
+                        {/* <Col span={12}>
                             <Form.Item
                                 labelAlign="left"
                                 label={t("receiptPurchase.form.department")}
@@ -298,7 +298,7 @@ export default function CreateStockReceipt() {
                                     onAdd={addDepartment}
                                 />
                             </Form.Item>
-                        </Col>
+                        </Col> */}
 
                         <Col span={12}>
                             <Form.Item

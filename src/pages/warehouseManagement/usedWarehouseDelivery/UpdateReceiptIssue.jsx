@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { ArrowLeftOutlined, PlusOutlined, SaveOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import {
     Row,
@@ -44,6 +44,7 @@ export default function UpdateStockIssue() {
     const [editingDetail, setEditingDetail] = useState(null);
     const [editingIndex, setEditingIndex] = useState(null);
     const [locationSrc, setLocationSrc] = useState();
+    const department = Form.useWatch("department", form);
 
     const { id } = useParams();
 
@@ -57,7 +58,13 @@ export default function UpdateStockIssue() {
         fetchStockLocation();
         fetchDataTable();
     }, []);
+    const userFilter = useMemo(() => {
+        if (!issuedBy) return;
+        return department
+            ? issuedBy.filter(u => u.option.department === department)
+            : issuedBy;
 
+    }, [issuedBy, department])
 
     const fetchReceiptIssueById = async () => {
         const res = await _unitOfWork.receiptIssue.getReceiptIssueById({ id: id })
@@ -99,6 +106,7 @@ export default function UpdateStockIssue() {
             const option = res.data.map(item => ({
                 label: item.fullName,
                 value: item.id,
+                option: item,
             }))
             setIssuedBy(option)
         }
@@ -287,40 +295,40 @@ export default function UpdateStockIssue() {
             width: 100,
             align: "right",
         },
-        {
-            title: t("stockIssue.table.unitPrice"),
-            dataIndex: "unitPrice",
-            key: "unitPrice",
-            width: 120,
-            align: "right",
-            render: (text) => (text ? parsePriceVnd(text) : "0 đ"),
+        // {
+        //     title: t("stockIssue.table.unitPrice"),
+        //     dataIndex: "unitPrice",
+        //     key: "unitPrice",
+        //     width: 120,
+        //     align: "right",
+        //     render: (text) => (text ? parsePriceVnd(text) : "0 đ"),
 
-        },
-        {
-            title: t("stockIssue.table.vatPercent"),
-            dataIndex: "vatPercent",
-            key: "vatPercent",
-            width: 100,
-            align: "right",
-        },
-        {
-            title: t("stockIssue.table.vatAmount"),
-            dataIndex: "vatAmount",
-            key: "vatAmount",
-            width: 120,
-            align: "right",
-            render: (text) => (text ? parsePriceVnd(text) : "0 đ"),
+        // },
+        // {
+        //     title: t("stockIssue.table.vatPercent"),
+        //     dataIndex: "vatPercent",
+        //     key: "vatPercent",
+        //     width: 100,
+        //     align: "right",
+        // },
+        // {
+        //     title: t("stockIssue.table.vatAmount"),
+        //     dataIndex: "vatAmount",
+        //     key: "vatAmount",
+        //     width: 120,
+        //     align: "right",
+        //     render: (text) => (text ? parsePriceVnd(text) : "0 đ"),
 
-        },
-        {
-            title: t("stockIssue.table.totalAmount"),
-            dataIndex: "totalAmount",
-            key: "totalAmount",
-            width: 140,
-            align: "right",
-            render: (text) => (text ? parsePriceVnd(text) : "0 đ"),
+        // },
+        // {
+        //     title: t("stockIssue.table.totalAmount"),
+        //     dataIndex: "totalAmount",
+        //     key: "totalAmount",
+        //     width: 140,
+        //     align: "right",
+        //     render: (text) => (text ? parsePriceVnd(text) : "0 đ"),
 
-        },
+        // },
         {
             title: t("stockIssue.table.note"),
             dataIndex: "note",
@@ -372,7 +380,7 @@ export default function UpdateStockIssue() {
     return (
         <div>
             <Form
-labelWrap
+                labelWrap
                 form={form}
                 labelCol={{
                     span: 8,
@@ -435,6 +443,9 @@ labelWrap
                                     )}
                                     options={departments}
                                     onAdd={addDepartment}
+                                    onChange={(value, option) => {
+                                        form.setFieldValue("receiverUsers", undefined);
+                                    }}
                                 />
                             </Form.Item>
                         </Col>
@@ -452,9 +463,15 @@ labelWrap
                                 ]}
                             >
                                 <Select
-                                    mode="multiple"
-                                    options={issuedBy}
+                                    // mode="multiple"
+                                    options={userFilter}
                                     placeholder={t("stockIssue.form.receiver")}
+                                    onChange={(value, option) => {
+
+                                        const dep = option?.option?.department;
+
+                                        form.setFieldValue("department", dep);
+                                    }}
                                 />
                             </Form.Item>
                         </Col>

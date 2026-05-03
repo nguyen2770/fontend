@@ -24,3 +24,6 @@ export const deleteDepartment = (payload) => {
 export const uploadDepartmentExcel = (_body) => {
     return postData('department/upload-department', _body);
 }
+export const getDeparmentByUser = (payload) => {
+    return get('department/get-by-user')
+}

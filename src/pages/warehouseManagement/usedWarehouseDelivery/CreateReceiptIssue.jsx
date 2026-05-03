@@ -26,6 +26,7 @@ import { useTranslation } from "react-i18next";
 import ModalStockIssue from "../../../components/modal/ModalStockIssue";
 import CustomSelectAdd from "../../../components/common/CustomSelectAdd";
 import { notiAction } from "../../../helper/noti-action-helper";
+import { useMemo } from "react";
 
 export default function CreatepurchaseOrder() {
     const [form] = Form.useForm();
@@ -42,6 +43,7 @@ export default function CreatepurchaseOrder() {
     const [editingDetail, setEditingDetail] = useState(null);
     const [editingIndex, setEditingIndex] = useState(null);
     const [locationSrc, setLocationSrc] = useState();
+    const department = Form.useWatch("department", form);
 
     useEffect(() => {
         form.setFieldsValue({
@@ -53,6 +55,14 @@ export default function CreatepurchaseOrder() {
         fetchIssuedBy();
         fetchStockLocation();
     }, []);
+
+    const userFilter = useMemo(() => {
+        if (!issuedBy) return;
+        return department
+            ? issuedBy.filter(u => u.option.department === department)
+            : issuedBy;
+
+    }, [issuedBy, department])
 
     const fetchDepartments = async () => {
         const department = await _unitOfWork.department.getAllDepartment();
@@ -100,6 +110,7 @@ export default function CreatepurchaseOrder() {
             const option = res.data.map(item => ({
                 label: item.fullName,
                 value: item.id,
+                option: item,
             }))
             setIssuedBy(option)
         }
@@ -207,40 +218,40 @@ export default function CreatepurchaseOrder() {
             width: 100,
             align: "right",
         },
-        {
-            title: t("stockIssue.table.unitPrice"),
-            dataIndex: "unitPrice",
-            key: "unitPrice",
-            width: 120,
-            align: "right",
-            render: (text) => (text ? parsePriceVnd(text) : "0 đ"),
+        // {
+        //     title: t("stockIssue.table.unitPrice"),
+        //     dataIndex: "unitPrice",
+        //     key: "unitPrice",
+        //     width: 120,
+        //     align: "right",
+        //     render: (text) => (text ? parsePriceVnd(text) : "0 đ"),
 
-        },
-        {
-            title: t("stockIssue.table.vatPercent"),
-            dataIndex: "vatPercent",
-            key: "vatPercent",
-            width: 100,
-            align: "right",
-        },
-        {
-            title: t("stockIssue.table.vatAmount"),
-            dataIndex: "vatAmount",
-            key: "vatAmount",
-            width: 120,
-            align: "right",
-            render: (text) => (text ? parsePriceVnd(text) : "0 đ"),
+        // },
+        // {
+        //     title: t("stockIssue.table.vatPercent"),
+        //     dataIndex: "vatPercent",
+        //     key: "vatPercent",
+        //     width: 100,
+        //     align: "right",
+        // },
+        // {
+        //     title: t("stockIssue.table.vatAmount"),
+        //     dataIndex: "vatAmount",
+        //     key: "vatAmount",
+        //     width: 120,
+        //     align: "right",
+        //     render: (text) => (text ? parsePriceVnd(text) : "0 đ"),
 
-        },
-        {
-            title: t("stockIssue.table.totalAmount"),
-            dataIndex: "totalAmount",
-            key: "totalAmount",
-            width: 140,
-            align: "right",
-            render: (text) => (text ? parsePriceVnd(text) : "0 đ"),
+        // },
+        // {
+        //     title: t("stockIssue.table.totalAmount"),
+        //     dataIndex: "totalAmount",
+        //     key: "totalAmount",
+        //     width: 140,
+        //     align: "right",
+        //     render: (text) => (text ? parsePriceVnd(text) : "0 đ"),
 
-        },
+        // },
         {
             title: t("stockIssue.table.note"),
             dataIndex: "note",
@@ -356,6 +367,9 @@ export default function CreatepurchaseOrder() {
                                     )}
                                     options={departments}
                                     onAdd={addDepartment}
+                                    onChange={(value, option) => {
+                                        form.setFieldValue("receiverUsers", undefined);
+                                    }}
                                 />
                             </Form.Item>
                         </Col>
@@ -373,9 +387,14 @@ export default function CreatepurchaseOrder() {
                                 ]}
                             >
                                 <Select
-                                    mode="multiple"
-                                    options={issuedBy}
+                                    options={userFilter}
                                     placeholder={t("stockIssue.form.receiver")}
+                                    onChange={(value, option) => {
+
+                                        const dep = option?.option?.department;
+
+                                        form.setFieldValue("department", dep);
+                                    }}
                                 />
                             </Form.Item>
                         </Col>

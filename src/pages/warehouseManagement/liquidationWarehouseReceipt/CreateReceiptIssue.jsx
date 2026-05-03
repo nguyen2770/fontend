@@ -330,7 +330,7 @@ export default function CreatepurchaseOrder() {
     return (
         <div>
             <Form
-labelWrap
+                labelWrap
                 form={form}
                 labelCol={{
                     span: 8,
@@ -384,21 +384,6 @@ labelWrap
                         <Col span={12}>
                             <Form.Item
                                 labelAlign="left"
-                                label={t("stockIssue.form.branch")}
-                                name="branch"
-                            >
-                                <CustomSelectAdd
-                                    placeholder={t(
-                                        "users.create.placeholders.branch"
-                                    )}
-                                    options={branches}
-                                    onAdd={addBranch}
-                                />
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item
-                                labelAlign="left"
                                 label={t("stockIssue.form.department")}
                                 name="department"
                             >
@@ -412,21 +397,6 @@ labelWrap
                             </Form.Item>
                         </Col>
 
-                        <Col span={12}>
-                            <Form.Item
-                                labelAlign="left"
-                                label={t("stockIssue.form.receiver")}
-                                name="receiver"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: t("stockIssue.validate.selectReceiver"),
-                                    },
-                                ]}
-                            >
-                                <Select options={receiver}></Select>
-                            </Form.Item>
-                        </Col>
 
                         <Col span={12}>
                             <Form.Item

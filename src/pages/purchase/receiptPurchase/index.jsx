@@ -163,6 +163,21 @@ export default function SuppliesNeed() {
             key: "code",
         },
         {
+            title: "Nhà cung cấp",
+            dataIndex: ["supplier", ""],
+            key: "code",
+        },
+        {
+            title: "Người lập",
+            dataIndex: ["createdBy", "fullName"],
+            key: "code",
+        },
+        {
+            title: "Phòng ban",
+            dataIndex: ["department", "departmentName"],
+            key: "code",
+        },
+        {
             title: t("receiptPurchase.fields.note"),
             dataIndex: "description",
             key: "note",
@@ -276,7 +291,7 @@ export default function SuppliesNeed() {
     return (
         <div className="p-3">
             <Form
-labelWrap
+                labelWrap
                 form={form}
                 layout="vertical"
                 onFinish={handleSearch}

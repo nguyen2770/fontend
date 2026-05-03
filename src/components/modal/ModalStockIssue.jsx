@@ -79,10 +79,10 @@ export default function ModalStockIssue({ open, handleOk, handleCancel, initialD
                 name: selectedSparepart?.sparePartsName || initialData?.name,
                 uomName: selectedSparepart?.uomId?.uomName || initialData?.uomName,
                 uom: selectedSparepart?.uomId?.id,
-                vatAmount: (parseFloat(values.vatPercent || 0) / 100) * parseFloat(values.qty || 0) * parseFloat(values.unitPrice || 0),
-                totalAmount:
-                    (parseFloat(values.vatPercent || 0) / 100) * parseFloat(values.qty || 0) * parseFloat(values.unitPrice || 0) +
-                    parseFloat(values.qty || 0) * parseFloat(values.unitPrice || 0),
+                // vatAmount: (parseFloat(values.vatPercent || 0) / 100) * parseFloat(values.qty || 0) * parseFloat(values.unitPrice || 0),
+                // totalAmount:
+                //     (parseFloat(values.vatPercent || 0) / 100) * parseFloat(values.qty || 0) * parseFloat(values.unitPrice || 0) +
+                //     parseFloat(values.qty || 0) * parseFloat(values.unitPrice || 0),
             };
         } else if (type === "AssetModel") {
             result = {
@@ -92,10 +92,10 @@ export default function ModalStockIssue({ open, handleOk, handleCancel, initialD
                 code: values?.assetModelName || initialData?.code,
                 uomName: uomName || initialData?.uomName,
                 uomId: values?.uom,
-                vatAmount: (parseFloat(values.vatPercent || 0) / 100) * parseFloat(values.qty || 0) * parseFloat(values.unitPrice || 0),
-                totalAmount:
-                    (parseFloat(values.vatPercent || 0) / 100) * parseFloat(values.qty || 0) * parseFloat(values.unitPrice || 0) +
-                    parseFloat(values.qty || 0) * parseFloat(values.unitPrice || 0),
+                // vatAmount: (parseFloat(values.vatPercent || 0) / 100) * parseFloat(values.qty || 0) * parseFloat(values.unitPrice || 0),
+                // totalAmount:
+                //     (parseFloat(values.vatPercent || 0) / 100) * parseFloat(values.qty || 0) * parseFloat(values.unitPrice || 0) +
+                //     parseFloat(values.qty || 0) * parseFloat(values.unitPrice || 0),
             };
         }
 
@@ -143,7 +143,7 @@ export default function ModalStockIssue({ open, handleOk, handleCancel, initialD
             width={800}
         >
             <Form
-labelWrap
+                labelWrap
                 form={form}
                 onFinish={onFinish}
                 layout="vertical"
@@ -272,7 +272,7 @@ labelWrap
                                 <Input disabled type="number" placeholder="0" />
                             </Form.Item>
                         </Col>
-                        <Col span={12}>
+                        {/* <Col span={12}>
                             <Form.Item
                                 name="unitPrice"
                                 label={t("modal.stockIssueDetail.fields.unitPrice")}
@@ -298,7 +298,7 @@ labelWrap
                             >
                                 <InputNumber style={{ width: "100%" }} min={0} max={100} />
                             </Form.Item>
-                        </Col>
+                        </Col> */}
                         <Col span={24}>
                             <Form.Item name="note" label={t("modal.stockIssueDetail.fields.note")}>
                                 <Input.TextArea placeholder={t("modal.stockIssueDetail.placeholders.enterNote")} rows={3} />

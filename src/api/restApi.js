@@ -18,7 +18,6 @@ const generateFullUrl = (_) => {
   if (_) {
     _baseUrl += _;
   }
-  console.log(baseURL);
   return _baseUrl;
 };
 

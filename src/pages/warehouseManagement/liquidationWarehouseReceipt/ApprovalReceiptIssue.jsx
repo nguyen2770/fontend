@@ -77,11 +77,11 @@ export default function ApprovalReceiptIssue() {
         const res = await _unitOfWork.receiptIssue.getReceiptIssueById({ id: id })
         if (res) {
             const converted = {
-                ...res,
-                issueDate: res.issueDate ? dayjs(res.issueDate) : null,
-                createdName: res.createdBy.fullName,
+                ...res.receiptIssue,
+                issueDate: res.receiptIssue.issueDate ? dayjs(res.receiptIssue.issueDate) : null,
+                createdName: res.receiptIssue.createdBy.fullName,
             };
-            form.setFieldsValue(converted); setAction(res.action);
+            form.setFieldsValue(converted); setAction(res.receiptIssue.action);
         }
     }
 
@@ -402,7 +402,7 @@ export default function ApprovalReceiptIssue() {
     return (
         <div>
             <Form
-labelWrap
+                labelWrap
                 form={form}
                 labelCol={{
                     span: 8,
@@ -457,30 +457,7 @@ labelWrap
                                 <Input disabled />
                             </Form.Item>
                         </Col>
-                        <Col span={12}>
-                            <Form.Item
-                                labelAlign="left"
-                                label={t("stockIssue.form.locationSrc")}
-                                name="locationSrc"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: t("Không bỏ trống"),
-                                    },
-                                ]}
-                            >
-                                <Select options={locationSrc}></Select>
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item
-                                labelAlign="left"
-                                label={t("stockIssue.form.branch")}
-                                name="branch"
-                            >
-                                <Select options={branches}></Select>
-                            </Form.Item>
-                        </Col>
+
                         <Col span={12}>
                             <Form.Item
                                 labelAlign="left"
@@ -488,22 +465,6 @@ labelWrap
                                 name="department"
                             >
                                 <Select options={departments}></Select>
-                            </Form.Item>
-                        </Col>
-
-                        <Col span={12}>
-                            <Form.Item
-                                labelAlign="left"
-                                label={t("stockIssue.form.receiver")}
-                                name="receiver"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: t("stockIssue.validate.selectReceiver"),
-                                    },
-                                ]}
-                            >
-                                <Select options={receiver}></Select>
                             </Form.Item>
                         </Col>
 
@@ -550,18 +511,7 @@ labelWrap
                                 <Input />
                             </Form.Item>
                         </Col>
-                        <Col span={12}>
-                            <Form.Item
-                                labelAlign="left"
-                                label={t("stockIssue.form.requestIssue")}
-                                name="requestIssue"
-                            >
-                                <Select
-                                    options={purchaseOrder}
-                                    onChange={(value) => handleChangeRequestIssue(value)}
-                                />
-                            </Form.Item>
-                        </Col>
+
                     </Row>
                     <Divider orientation="left" size="small">{t("stockIssue.section.materials")}</Divider>
                     {action === "pendingApproval" && (

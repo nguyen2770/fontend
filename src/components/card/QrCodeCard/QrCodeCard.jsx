@@ -13,10 +13,8 @@ export default function QrCodeCard({ assetMaintenance, companyCode }) {
           <div className="asset-maintenance-qrcode">
             <QRCode
               value={
-                "http://192.168.1.154:3003/scan-QR-code-home?assetMaintenance=" +
-                (assetMaintenance.parentId ?? assetMaintenance.id) +
-                "&companyCode=" +
-                user?.company?.code
+                "https://datn-mobie.tranbaonguyen.id.vn/scan-QR-code-home?assetMaintenance=" +
+                (assetMaintenance.parentId ?? assetMaintenance.id) 
               }
             />
             {/* <QRCode

@@ -65,9 +65,9 @@ export default function UpdateStockIssue() {
         const res = await _unitOfWork.receiptIssue.getReceiptIssueById({ id: id })
         if (res) {
             const converted = {
-                ...res,
-                issueDate: res.issueDate ? dayjs(res.issueDate) : null,
-                createdName: res.createdBy?.fullName,
+                ...res.receiptIssue,
+                issueDate: res.receiptIssue.issueDate ? dayjs(res.receiptIssue.issueDate) : null,
+                createdName: res.receiptIssue.createdBy?.fullName,
             };
             form.setFieldsValue(converted);
         }
@@ -388,7 +388,7 @@ export default function UpdateStockIssue() {
     return (
         <div>
             <Form
-labelWrap
+                labelWrap
                 form={form}
                 labelCol={{
                     span: 8,
@@ -424,36 +424,7 @@ labelWrap
                                 <Input disabled value={user.fullName} />
                             </Form.Item>
                         </Col>
-                        <Col span={12}>
-                            <Form.Item
-                                labelAlign="left"
-                                label={t("stockIssue.form.locationSrc")}
-                                name="locationSrc"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: t("Không bỏ trống"),
-                                    },
-                                ]}
-                            >
-                                <Select options={locationSrc}></Select>
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item
-                                labelAlign="left"
-                                label={t("stockIssue.form.branch")}
-                                name="branch"
-                            >
-                                <CustomSelectAdd
-                                    placeholder={t(
-                                        "users.create.placeholders.branch"
-                                    )}
-                                    options={branches}
-                                    onAdd={addBranch}
-                                />
-                            </Form.Item>
-                        </Col>
+
                         <Col span={12}>
                             <Form.Item
                                 labelAlign="left"
@@ -467,22 +438,6 @@ labelWrap
                                     options={departments}
                                     onAdd={addDepartment}
                                 />
-                            </Form.Item>
-                        </Col>
-
-                        <Col span={12}>
-                            <Form.Item
-                                labelAlign="left"
-                                label={t("stockIssue.form.receiver")}
-                                name="receiver"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: t("stockIssue.validate.selectReceiver"),
-                                    },
-                                ]}
-                            >
-                                <Select options={receiver}></Select>
                             </Form.Item>
                         </Col>
 
@@ -519,16 +474,6 @@ labelWrap
                             </Form.Item>
                         </Col>
 
-
-                        <Col span={12}>
-                            <Form.Item
-                                labelAlign="left"
-                                label={t("stockIssue.form.description")}
-                                name="description"
-                            >
-                                <Input />
-                            </Form.Item>
-                        </Col>
                     </Row>
                     <Divider orientation="left" size="small">{t("stockIssue.section.materials")}</Divider>
                     <Row className="float-right mb-2">
